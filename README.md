@@ -11,7 +11,7 @@ Air traffic visualization using D3.js - https://github.com/Domajno/Air-traffic-v
 **Group P52 :** 
 
     
-**Description ** 
+**Description** 
 [TODO]
 
 **Features**
