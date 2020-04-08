@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class FaqController {
     
-    @GetMapping("/flight")
+    @GetMapping("/faq")
     public String faq(Model model) {
-	return "faq.jsp";
+	return "faq";
     }
 }

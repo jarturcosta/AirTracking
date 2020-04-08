@@ -15,7 +15,7 @@ public class PlaneController {
 
 	@GetMapping("/plane")
 	public String plane(Model model) {
-		return "plane.jsp";
+		return "plane";
 	}
 
 }

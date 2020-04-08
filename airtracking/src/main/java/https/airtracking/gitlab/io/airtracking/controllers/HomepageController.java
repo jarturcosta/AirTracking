@@ -15,7 +15,7 @@ public class HomepageController {
 
 	@GetMapping("/homepage")
 	public String homepage(Model model) {
-		return "homepage.jsp";
+		return "homepage";
 	}
 
 }
