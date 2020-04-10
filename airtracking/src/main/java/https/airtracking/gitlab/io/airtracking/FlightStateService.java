@@ -4,20 +4,23 @@
  * and open the template in the editor.
  */
 package https.airtracking.gitlab.io.airtracking;
+
+import https.airtracking.gitlab.io.airtracking.Models.FlightState;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import java.util.List;
-import org.springframework.data.mongodb.repository.MongoRepository;
-
 
 /**
  *
  * @author jarturcosta
  */
-
-
-public interface FlightStateRepository extends MongoRepository<FlightStateMessage, String> {
-    @Override
+public interface FlightStateService {
     public List<FlightStateMessage> findAll();
     
     public FlightStateMessage findByTime(int time);
+    
+    public List<FlightState> getFlightStatesByTime(int time);
+    
+    public void saveOrUpdateFlightStateMessage(FlightStateMessage message);
+    
+    
 }

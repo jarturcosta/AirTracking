@@ -11,7 +11,7 @@ import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import https.airtracking.gitlab.io.airtracking.Models.InputMessage;
 import java.math.BigDecimal;
 import java.util.List;
-import static org.springframework.http.converter.json.Jackson2ObjectMapperBuilder.json;
+import java.util.Optional;
 
 /**
  *
@@ -32,17 +32,25 @@ public class FlightStateDeserializer {
         
         for (int i = 0; i < input.getNStates(); i++) {
             List<Object> currentState = states.get(i);
+
+            for (Object object : currentState) {
+                if (object == null) {
+                    System.out.println(">>"+currentState.indexOf(object)+":"+currentState);
+
+                    currentState.set(currentState.indexOf(object), "null");
+                }
+            }
             
-            
+
             FlightState state = new FlightState(currentState.get(0).toString(),
                                                 currentState.get(2).toString(), 
-                                                new BigDecimal(String.valueOf(currentState.get(3))).intValue(),
-                                                new BigDecimal(String.valueOf(currentState.get(4))).intValue(),
-                                                (Double) currentState.get(5), 
-                                                (Double) currentState.get(6), 
-                                                (Double) currentState.get(9), 
-                                                (Double) currentState.get(11), 
-                                                (Boolean) currentState.get(8));
+                                                currentState.get(3).toString(),
+                                                currentState.get(4).toString(),
+                                                currentState.get(5).toString(), 
+                                                currentState.get(6).toString(), 
+                                                currentState.get(9).toString(), 
+                                                currentState.get(11).toString(), 
+                                                currentState.get(8).toString());
             result.addState(state);
         }
         

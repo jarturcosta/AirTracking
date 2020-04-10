@@ -10,13 +10,16 @@ import org.springframework.data.annotation.Id;
 
 
 import java.util.List;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author jarturcosta
  */
+
+@Document(collection = "flight_state_messages")
 public class FlightStateMessage implements Serializable{
-    
+    @Id
     private int time;
     private static List<FlightState> states;
     
@@ -28,12 +31,30 @@ public class FlightStateMessage implements Serializable{
     public void addState(FlightState state) {
         states.add(state);
     }
+    
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public List<FlightState> getStates() {
+        return states;
+    }
+
+    public void setStates(List<FlightState> states) {
+        FlightStateMessage.states = states;
+    }
+    
 
     @Override
     public String toString() {
         return "FlightStateMessage{" + "time=" + time + "states=" + states.toString();
     }
-    
+
+
     
 }
 

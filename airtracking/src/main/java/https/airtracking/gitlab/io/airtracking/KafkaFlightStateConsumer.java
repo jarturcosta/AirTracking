@@ -6,6 +6,7 @@
 package https.airtracking.gitlab.io.airtracking;
 
 
+import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
@@ -18,7 +19,7 @@ import java.util.Properties;
  *
  * @author jarturcosta
  */
-public class KafkaFlightStateConsumer {
+public class KafkaFlightStateConsumer extends Thread {
     private final static String TOPIC = "ESP52-test2";
     private final static String BOOTSTRAP_SERVERS =
             "localhost:9092";
@@ -46,7 +47,8 @@ public class KafkaFlightStateConsumer {
         return consumer;
     }
     
-    public void runConsumer() throws InterruptedException {
+    @Override
+    public void run() {
         final Consumer<Long, String> consumer = createConsumer();
         final int giveUp = 100;   int noRecordsCount = 0;
         while (true) {
@@ -62,7 +64,8 @@ public class KafkaFlightStateConsumer {
                         record.key(), record.value(),
                         record.partition(), record.offset());
                 if (record.value()!=null) {
-                    System.out.println(FlightStateDeserializer.deserialize(record.value()).toString());
+                    FlightStateMessage fsm = FlightStateDeserializer.deserialize(record.value());
+                    System.out.println(fsm.toString());
                 }
             });
             consumer.commitAsync();

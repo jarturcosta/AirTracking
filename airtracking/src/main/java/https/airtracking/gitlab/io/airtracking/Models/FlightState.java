@@ -6,21 +6,26 @@
 package https.airtracking.gitlab.io.airtracking.Models;
 import java.io.Serializable;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.lang.Nullable;
 
 /**
  *
  * @author jarturcosta
  */
+ @Document(collection="flight_states")
 public class FlightState implements Serializable{
     
     @Id
     private String icao24;
     private String origin_contry;
-    private int time_position, last_contact;
-    private double longitude, latitude, velocity, vertical_rate;
-    private boolean on_ground;
+    private String time_position, last_contact;
+    private String longitude;
+    private String latitude;
+    private String velocity, vertical_rate;
+    private String on_ground;
 
-    public FlightState(String icao24, String origin_contry, int time_position, int last_contact, double longitude, double latitude, double velocity, double vertical_rate, boolean on_ground) {
+    public FlightState(String icao24, String origin_contry, String time_position, String last_contact, String longitude, String latitude, String velocity, String vertical_rate, String on_ground) {
         this.icao24 = icao24;
         this.origin_contry = origin_contry;
         this.time_position = time_position; 
@@ -49,59 +54,59 @@ public class FlightState implements Serializable{
         this.origin_contry = origin_contry;
     }
 
-    public int getTime_position() {
+    public String getTime_position() {
         return time_position;
     }
 
-    public void setTime_position(int time_position) {
+    public void setTime_position(String time_position) {
         this.time_position = time_position;
     }
 
-    public int getLast_contact() {
+    public String getLast_contact() {
         return last_contact;
     }
 
-    public void setLast_contact(int last_contact) {
+    public void setLast_contact(String last_contact) {
         this.last_contact = last_contact;
     }
 
-    public double getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public double getVelocity() {
+    public String getVelocity() {
         return velocity;
     }
 
-    public void setVelocity(double velocity) {
+    public void setVelocity(String velocity) {
         this.velocity = velocity;
     }
 
-    public double getVertical_rate() {
+    public String getVertical_rate() {
         return vertical_rate;
     }
 
-    public void setVertical_rate(double vertical_rate) {
+    public void setVertical_rate(String vertical_rate) {
         this.vertical_rate = vertical_rate;
     }
 
-    public boolean isOn_ground() {
+    public String isOn_ground() {
         return on_ground;
     }
 
-    public void setOn_ground(boolean on_ground) {
+    public void setOn_ground(String on_ground) {
         this.on_ground = on_ground;
     }
 
