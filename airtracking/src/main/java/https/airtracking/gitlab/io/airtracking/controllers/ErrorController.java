@@ -8,13 +8,17 @@ package https.airtracking.gitlab.io.airtracking.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ *
+ * @author Utilizador
+ */
 @Controller
-public class FaqController {
+public class ErrorController {
     
-    @GetMapping("/faq")
+    @GetMapping("/error")
     public String faq(Model model) {
-	return "faq.html";
+	return "error.html";
     }
+    
 }

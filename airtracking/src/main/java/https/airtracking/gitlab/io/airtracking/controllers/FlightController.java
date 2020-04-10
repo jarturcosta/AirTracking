@@ -15,7 +15,7 @@ public class FlightController {
 
 	@GetMapping("/flight")
 	public String flight(Model model) {
-		return "flight";
+		return "flight.html";
 	}
 
 }
