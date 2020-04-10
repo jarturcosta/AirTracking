@@ -98,6 +98,7 @@
           .enter()
             .append("circle", ".pin")
             .attr("class", "pin")
+            .attr("r", 3)
             .attr("transform", function(d) {
             return "translate(" + projection([
                 d.location.longitude,

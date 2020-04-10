@@ -18,10 +18,10 @@ body {
 }
 
 .country:hover {
-	fill:black;
+    fill:black;
 }
 
 .pin {
   fill: red;
-  r: 3;
+  /*r: 3;*/
 }
