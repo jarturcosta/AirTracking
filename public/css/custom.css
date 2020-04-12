@@ -1,12 +1,14 @@
-/* anchor-padding {
-    /* display: block;
+span-padding {
+    display: block;
     position: relative;
-    top: -250px;
-    visibility: hidden; */
- /*   margin-top: -300px;        /* Size of fixed header */
-   /* padding-bottom: 300px; 
-    display: block; 
-} */
+    /* top: -250px; */
+    margin-top: 300px;
+    padding-top: 150px;
+    /* visibility: hidden; */
+    /*margin-top: -300px;        /* Size of fixed header */
+    /*padding-bottom: 300px; 
+    display: block;*/
+}
 
 /* h2::before { 
     display: block; 
