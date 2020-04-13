@@ -19,29 +19,25 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/flightstates")
-public class FlightStateController {
+public class FlightStateMessageController {
     
     @Autowired
-    private FlightStateService flightStateService;
+    private FlightStateMessageService flightStateService;
     
     @GetMapping(value = "/")
-    public List<FlightStateMessage> getAllMessages() {
+    public List<FlightStateMessage> getAllFlightStateMessages() {
         return flightStateService.findAll();
     }
     
     @GetMapping(value = "/{time}")
-    public FlightStateMessage getMessageByTime(@PathVariable("time") int time) {
+    public FlightStateMessage getFlightStateMessageByTime(@PathVariable("time") int time) {
         return flightStateService.findByTime(time);
     }
-    
-    @GetMapping(value = "/states/{time}")
-    public List<FlightState> getStatestByTime(@PathVariable("time") int time) {
-        return flightStateService.getFlightStatesByTime(time);
-    }
+   
     
     @PostMapping(value = "/")
-    public ResponseEntity<?> saveOrUpdateStudent(@RequestBody FlightStateMessage message) {
-        flightStateService.saveOrUpdateFlightStateMessage(message);
+    public ResponseEntity<?> saveOrUpdateFlightStateMessage(@RequestBody FlightStateMessage flightStateMessage) {
+        flightStateService.saveOrUpdateFlightStateMessage(flightStateMessage);
         return new ResponseEntity("Flight state added successfully", HttpStatus.OK);
     }
     

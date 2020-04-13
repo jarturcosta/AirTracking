@@ -4,7 +4,13 @@
  * and open the template in the editor.
  */
 package https.airtracking.gitlab.io.airtracking.Models;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.lang.Nullable;
@@ -13,10 +19,10 @@ import org.springframework.lang.Nullable;
  *
  * @author jarturcosta
  */
- @Document(collection="flight_states")
-public class FlightState implements Serializable{
+@Data
+@ToString
+public class FlightState{
     
-    @Id
     private String icao24;
     private String origin_contry;
     private String time_position, last_contact;
@@ -25,6 +31,9 @@ public class FlightState implements Serializable{
     private String velocity, vertical_rate;
     private String on_ground;
 
+    public FlightState() {
+    }
+    
     public FlightState(String icao24, String origin_contry, String time_position, String last_contact, String longitude, String latitude, String velocity, String vertical_rate, String on_ground) {
         this.icao24 = icao24;
         this.origin_contry = origin_contry;
@@ -37,7 +46,6 @@ public class FlightState implements Serializable{
         this.on_ground = on_ground;
     }
 
-    @Id
     public String getIcao24() {
         return icao24;
     }
@@ -109,10 +117,20 @@ public class FlightState implements Serializable{
     public void setOn_ground(String on_ground) {
         this.on_ground = on_ground;
     }
-
+    
     @Override
     public String toString() {
-        return "{icao24=" + icao24 + ", origin_contry=" + origin_contry + ", time_position=" + time_position + ", last_contact=" + last_contact + ", longitude=" + longitude + ", latitude=" + latitude + ", velocity=" + velocity + ", vertical_rate=" + vertical_rate + ", on_ground=" + on_ground + '}';
+      ObjectMapper mapper = new ObjectMapper();
+      
+      String jsonString = "";
+    try {
+      mapper.enable(SerializationFeature.INDENT_OUTPUT);
+      jsonString = mapper.writeValueAsString(this);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+    
+      return jsonString;
     }
     
     

@@ -10,35 +10,32 @@ import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author jarturcosta
  */
 @Service
-public class FlightStateServiceImpl implements FlightStateService {
+public class FlightStateMessageServiceImpl implements FlightStateMessageService {
     
     @Autowired
-    private FlightStateRepository repository;
+    private FlightStateMessageRepository flightStateMessageRepository;
 
     @Override
     public List<FlightStateMessage> findAll() {
-        return repository.findAll();
+        return flightStateMessageRepository.findAll();
     }
 
     @Override
     public FlightStateMessage findByTime(int time) {
-        return repository.findByTime(time);
+        return flightStateMessageRepository.findByTime(time);
     }
 
     @Override
-    public List<FlightState> getFlightStatesByTime(int time) {
-        return repository.findByTime(time).getStates();
-    }
-
-    @Override
+    @Transactional
     public void saveOrUpdateFlightStateMessage(FlightStateMessage message) {
-        repository.save(message);
+        flightStateMessageRepository.save(message);
     }
     
 }
