@@ -1,0 +1,28 @@
+span-padding {
+    display: block;
+    position: relative;
+    /* top: -250px; */
+    margin-top: 300px;
+    padding-top: 150px;
+    /* visibility: hidden; */
+    /*margin-top: -300px;        /* Size of fixed header */
+    /*padding-bottom: 300px; 
+    display: block;*/
+}
+
+/* h2::before { 
+    display: block; 
+    content: " "; 
+    margin-top: -285px; 
+    height: 285px; 
+    visibility: hidden; 
+    pointer-events: none;
+  } */
+/* 
+anchor-padding {
+    border-top: 300px solid transparent;
+    margin-top: -300px;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+} */
