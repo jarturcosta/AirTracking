@@ -2,6 +2,8 @@
     <html lang="en">
     <link rel="stylesheet" href="css/pagestyles.css">
     <link rel="stylesheet" href="css/mapstyles.css">
+    <link rel="stylesheet" href="css/search.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
     <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
 
@@ -18,12 +20,16 @@
     <p>Track every flight and plane</p>
     </div>
 
-    <div class="navbar">
+    <div class="navbar topnav">
         <a href="/airtracking/homepage">Home</a>
         <a href="/airtracking/map">Map</a>
         <a href="/airtracking/flight">Flight statistics</a>
         <a href="/airtracking/plane">Plane statistics</a>
-        <a href="/airtracking/faq" class="right">FAQ</a>
+        <a href="/airtracking/faq">FAQ</a>
+        <div class="search-container">
+        <input type="text" placeholder="Search..." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
       </div>
 
     <div class="row">

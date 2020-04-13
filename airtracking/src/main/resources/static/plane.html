@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <link rel="stylesheet" href="css/pagestyles.css">
+    <link rel="stylesheet" href="css/search.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
 <title>Air Tracking</title>
 <meta charset="UTF-8">
@@ -13,16 +15,42 @@
   <p>Track every flight and plane</p>
 </div>
 
-<div class="navbar">
+<div class="navbar topnav">
   <a href="/airtracking/homepage">Home</a>
   <a href="/airtracking/map">Map</a>
   <a href="/airtracking/flight">Flight statistics</a>
   <a href="/airtracking/plane">Plane statistics</a>
-  <a href="/airtracking/faq" class="right">FAQ</a>
+  <a href="/airtracking/faq">FAQ</a>
+  <div class="search-container">
+  <input type="text" placeholder="Search..." name="search">
+      <button type="submit"><i class="fa fa-search"></i></button>
+  </div>
 </div>
 
 <div class="row">
-  
+  <div class="side">
+    <center>
+    <h2>Plane Statistics</h2>
+    <div class="fakeimg" style="height:240px;">
+        <img src="img/plane.jpg" alt="plane" style="width:400px;height:200px;">
+    </div><br>
+    
+    <form action="/plane.html">
+        <center><h3><label for="planes">Choose a plane:</label></h3></center>
+
+        <center><select id="planes" name="planes">
+          <option value="test1">plane1</option>
+          <option value="test2">plane2</option>
+        </select></center>
+        <center><h5><input type="submit" value="Submit"></h5></center>
+    </form>
+    
+    </center>
+  </div>
+  <div class="main">
+      <center><img src="img/airtracking.png" alt="at" style="width:300px;height:100px;"></center>
+      
+  </div>
 </div>
 
 <div class="footer">

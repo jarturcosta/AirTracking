@@ -17,5 +17,10 @@ public class FlightController {
 	public String flight(Model model) {
 		return "flight.html";
 	}
+        
+        @GetMapping("/flight/data")
+	public String flightData(Model model) {
+		return "flightData.html";
+	}
 
 }
