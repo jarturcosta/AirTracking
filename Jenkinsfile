@@ -10,7 +10,15 @@ node {
     }
 
     stage('Deploy Artifact') {
-        sh 'mvn -f airtracking deploy'
-        sh 'mvn -f airtracking deploy'
+        sh 'mvn -s settings.xml -f airtracking deploy'
+        sh 'mvn -s settings.xml -f airtrackingwebapp deploy'
+    }
+
+    stage('Deploy Runtime') {
+        sshagent (credentials: ['airtracking-runtime']) {
+            sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 sh pull.sh'
+            sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 docker-compose stop'
+            sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 docker-compose up -d'
+        }
     }
 }
