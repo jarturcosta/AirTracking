@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author jarturcosta
  */
-public class InputMessage implements Serializable {
+public class InputMessage{
 
     private int time;
     private List<List<Object>> states;

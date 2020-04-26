@@ -5,7 +5,6 @@
  */
 package https.airtracking.gitlab.io.airtracking.controllers;
 
-import https.airtracking.gitlab.io.airtracking.FlightStateService;
 import https.airtracking.gitlab.io.airtracking.Models.FlightState;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import java.util.List;
@@ -20,13 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import https.airtracking.gitlab.io.airtracking.FlightStateMessageService;
 
 @Controller
 @RequestMapping("/flight")
 public class FlightController {
     
         @Autowired
-        private FlightStateService fService;
+        private FlightStateMessageService fService;
         
         @GetMapping(value = "/")
         public List<FlightStateMessage> findAll(){
@@ -36,11 +36,6 @@ public class FlightController {
         @GetMapping(value = "/{time}")
         public FlightStateMessage findByTime(@PathVariable("time") int time){
             return fService.findByTime(time);
-        }
-    
-        @GetMapping(value = "/states/{time}")
-        public List<FlightState> getFlightStatesByTime(@PathVariable("time") int time){
-            return fService.getFlightStatesByTime(time);
         }
 
         @PostMapping(value = "/")

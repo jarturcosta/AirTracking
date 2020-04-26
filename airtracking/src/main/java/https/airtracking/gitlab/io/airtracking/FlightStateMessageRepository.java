@@ -8,22 +8,18 @@ import https.airtracking.gitlab.io.airtracking.Models.FlightState;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 
 /**
  *
  * @author jarturcosta
  */
-public interface FlightStateRepository extends MongoRepository<FlightStateMessage, String> {
+@Repository
+public interface FlightStateMessageRepository extends MongoRepository<FlightStateMessage, String> {
     
-    @Override
-    public List<FlightStateMessage> findAll();
     
-    public FlightStateMessage findByTime(int time);
-    
-    public List<FlightState> getFlightStatesByTime(int time);
-
-    public void saveOrUpdateFlightStateMessage(FlightStateMessage message);
-    
+    FlightStateMessage findByTime(int time);
+        
     
 }

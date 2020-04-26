@@ -9,9 +9,7 @@ import com.google.gson.Gson;
 import https.airtracking.gitlab.io.airtracking.Models.FlightState;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import https.airtracking.gitlab.io.airtracking.Models.InputMessage;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *

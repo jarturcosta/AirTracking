@@ -1,0 +1,27 @@
+body {
+    margin: 0px;
+    overflow: hidden;
+  }
+  
+.sphere {
+  /*fill: #4242e4;*/
+  /*fill: #29ABE2;*/
+  fill: white;
+}
+  
+.country {
+  /*fill: lightgreen;*/
+  fill: grey;
+  stroke: grey;
+  /*stroke-opacity: 0.1;*/
+  stroke-width:0.05px;
+}
+
+.country:hover {
+    fill:black;
+}
+
+.pin {
+  fill: red;
+  /*r: 3;*/
+}
