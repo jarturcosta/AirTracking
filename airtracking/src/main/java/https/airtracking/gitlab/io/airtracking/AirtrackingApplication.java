@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = FlightStateController.class)
+@ComponentScan(basePackageClasses = FlightStateMessageController.class)
 public class AirtrackingApplication implements CommandLineRunner{
     
     
@@ -22,8 +22,8 @@ public class AirtrackingApplication implements CommandLineRunner{
         
         //String allStates = KafkaFlightStateProducer.getAllStates();
         
-        KafkaFlightStateProducer producer = new KafkaFlightStateProducer("ESP52-test2", Boolean.FALSE);
-        producer.run();
+        //KafkaFlightStateProducer producer = new KafkaFlightStateProducer("ESP52-test2", Boolean.FALSE);
+        //producer.run();
         
         //KafkaFlightStateConsumer c = new KafkaFlightStateConsumer();
         //c.run();
