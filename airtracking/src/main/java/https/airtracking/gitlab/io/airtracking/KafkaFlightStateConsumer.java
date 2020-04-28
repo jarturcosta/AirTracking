@@ -61,8 +61,8 @@ public class KafkaFlightStateConsumer extends Thread {
             }
             consumerRecords.forEach(record -> {
                 System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
-                        record.key(), record.value(),
-                        record.partition(), record.offset());
+                    record.key(), record.value(),
+                    record.partition(), record.offset());
                 if (record.value()!=null) {
                     FlightStateMessage fsm = FlightStateDeserializer.deserialize(record.value());
                     System.out.println(fsm.toString());

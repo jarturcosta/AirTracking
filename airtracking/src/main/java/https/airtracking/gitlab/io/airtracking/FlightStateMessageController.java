@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class FlightStateMessageController {
     
     @Autowired
-    private FlightStateMessageService flightStateService;
+    private static FlightStateMessageService flightStateService;
     
     @GetMapping(value = "/")
     public List<FlightStateMessage> getAllFlightStateMessages() {
@@ -36,10 +36,11 @@ public class FlightStateMessageController {
    
     
     @PostMapping(value = "/")
-    public ResponseEntity<?> saveOrUpdateFlightStateMessage(@RequestBody FlightStateMessage flightStateMessage) {
+    public static ResponseEntity<?> saveOrUpdateFlightStateMessage(@RequestBody FlightStateMessage flightStateMessage) {
         flightStateService.saveOrUpdateFlightStateMessage(flightStateMessage);
         return new ResponseEntity("Flight state added successfully", HttpStatus.OK);
     }
+
     
     
     
