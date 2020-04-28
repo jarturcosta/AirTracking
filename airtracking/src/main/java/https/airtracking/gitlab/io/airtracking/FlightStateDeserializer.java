@@ -21,7 +21,7 @@ public class FlightStateDeserializer {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         InputMessage input = gson.fromJson(message, InputMessage.class); // deserializes json into target2
         
-        System.out.println(input.toString());
+        //System.out.println(input.toString());
         
         FlightStateMessage result = new FlightStateMessage(input);
         List<List<Object>>  states = input.getStates();

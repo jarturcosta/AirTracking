@@ -76,6 +76,22 @@ public class FlightStateMessage{
       return jsonString;
     }
     
+    public String toString2() {
+        String res = this.getTime() + ": {\n";
+        int cnt = 0;
+        for (FlightState state : states) {
+            if (cnt % 5 == 0) {
+                res+="\n\t";
+            }
+            cnt+=1;
+            res +=  state.getIcao24() + ", ";
+            
+            
+        }
+        res += "}";
+        return res;
+    }
+    
 
 
     
