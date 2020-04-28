@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
     <head>
         <title>Air Tracking</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/pagestyles.css">
-        <link rel="stylesheet" href="css/search.css">
-        <link rel="stylesheet" href="css/grid.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="css/pagestyles.css" />
+        <link rel="stylesheet" href="css/search.css" />
+        <link rel="stylesheet" href="css/grid.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     </head>
     <body>
 
@@ -57,9 +56,9 @@
                         <div class="w3-dropdown-hover">
                             <button class="w3-button">Flight</button>
                             <div class="w3-dropdown-content w3-bar-block w3-card-4">
-                                <a href="/trackflight" class="w3-bar-item w3-button">Flight01</a>
-                                <a href="/trackflight" class="w3-bar-item w3-button">Flight02</a>
-                                <a href="/trackflight" class="w3-bar-item w3-button">Flight03</a>
+                                <a href="/trackflight?flight=flight01" class="w3-bar-item w3-button">Flight01</a>
+                                <a href="/trackflight?flight=flight02" class="w3-bar-item w3-button">Flight02</a>
+                                <a href="/trackflight?flight=flight03" class="w3-bar-item w3-button">Flight03</a>
                             </div>
                         </div>
                     </div>

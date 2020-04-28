@@ -9,7 +9,7 @@ public class MapController {
 
     @GetMapping("/map")
     public String map(Model model) {
-        return "worldmap.html";
+        return "worldmap";
     }
 
 }

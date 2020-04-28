@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>Air Tracking</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/pagestyles.css">
-        <link rel="stylesheet" href="css/search.css">
-        <link rel="stylesheet" href="css/switch.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="css/pagestyles.css" />
+        <link rel="stylesheet" href="css/search.css" />
+        <link rel="stylesheet" href="css/switch.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     </head>
     <body>
 
@@ -48,9 +47,9 @@
                         <br>
                         <center><h3><label for="flights">Choose a flight:</label></h3></center>
 
-                        <center><select id="flights" name="flights">
-                                <option value="test1">flight1</option>
-                                <option value="test2">flight2</option>
+                        <center><select id="flight" name="flight">
+                                <option value="flight1">flight1</option>
+                                <option value="flight2">flight2</option>
                             </select></center>
                         <center><h5><input type="submit" value="Submit"></h5></center>
                     </form>
@@ -59,12 +58,12 @@
             </div>
             <div class="main">
                 <center><img src="img/airtracking.png" alt="at" style="width:300px;height:100px;"></center>
-                <h3>Name:</h3>
-                <h3>Max speed:</h3>
-                <h3>Average speed:</h3>
-                <h3>Max altitude:</h3>
-                <h3>Average vertical rate:</h3>
-                <h3>Number of actions:</h3>
+                <h3>Name:</h3> <p th:text="${name}" />
+                <h3>Max speed:</h3> <p th:text="${maxspeed}" />
+                <h3>Average speed:</h3> <p th:text="${avgspeed}" />
+                <h3>Max altitude:</h3> <p th:text="${maxalt}" />
+                <h3>Average vertical rate:</h3> <p th:text="${avgvertical}" />
+                <h3>Number of actions:</h3> <p th:text="${number}" />
 
                 <p></p>
 
