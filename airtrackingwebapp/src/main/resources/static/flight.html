@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="css/search.css">
         <link rel="stylesheet" href="css/switch.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     </head>
     <body>
 
@@ -38,6 +39,13 @@
                     </div><br>
 
                     <form action="/flight.html">
+                        <center><h3><label for="flights">Dates:</label></h3></center>
+                        <label for="startdate">Start date:</label>
+                        <input type="date" id="startdate" name="startdate">
+                        <p></p>
+                        <label for="enddate">End date:</label>
+                        <input type="date" id="enddate" name="enddate">
+                        <br>
                         <center><h3><label for="flights">Choose a flight:</label></h3></center>
 
                         <center><select id="flights" name="flights">
@@ -52,7 +60,9 @@
             <div class="main">
                 <center><img src="img/airtracking.png" alt="at" style="width:300px;height:100px;"></center>
                 <h3>Name:</h3>
+                <h3>Max speed:</h3>
                 <h3>Average speed:</h3>
+                <h3>Max altitude:</h3>
                 <h3>Average vertical rate:</h3>
                 <h3>Number of actions:</h3>
 
