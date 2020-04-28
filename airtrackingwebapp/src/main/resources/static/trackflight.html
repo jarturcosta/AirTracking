@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <title>Air Tracking</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/pagestyles.css">
-        <link rel="stylesheet" href="css/mapstyles.css">
         <link rel="stylesheet" href="css/search.css">
+        <link rel="stylesheet" href="css/grid.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
-        <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
     </head>
-
     <body>
 
         <div class="header">
@@ -34,8 +32,20 @@
         </div>
 
         <div class="row">
-            <svg width="2000" height="800"></svg>
-            <script src="js/worldmap.js"></script>
+            <div class="side">
+                <center>
+                    <h2>Flight tracking</h2>
+                    <br>
+                    <h3>$name</h3>  
+                </center>
+                <h4>Events:</h4>
+                <p>Airplane at 10km</p>
+
+            </div>
+            <div class="main">
+                <center><img src="img/airtracking.png" alt="at" style="width:300px;height:100px;"></center>
+
+            </div>
         </div>
 
         <div class="footer">
@@ -44,3 +54,4 @@
 
     </body>
 </html>
+

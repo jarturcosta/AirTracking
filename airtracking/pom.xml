@@ -10,7 +10,7 @@
     </parent>
     <groupId>https.airtracking.gitlab.io</groupId>
     <artifactId>airtracking</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>war</packaging>
     <name>airtracking</name>
     <description>Sistema composto por um conjunto de dashboards com base nos dados relativos aos aviões e respetivas viagem. Usaremos a API OpenSky para recolher os dados necessários, sendo que estes irão ser processados e armazenados numa BD. As viagens vão ser representadas num mapa de forma a que utilizadores não tenham de intrepretar dados mas sim visualizar os mesmos, também será desenvolvida uma página de estatísticas de voos e aviões para os utilizadores que estiverem mais interessados em voos ou aviões especificos.</description>
@@ -107,6 +107,19 @@
             <type>jar</type>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>c04a282c7a6d-releases</name>
+            <url>http://192.168.160.99:8081/artifactory/libs-release</url>
+        </repository>
+        <snapshotRepository>
+            <id>central</id>
+            <name>c04a282c7a6d-releases</name>
+            <url>http://192.168.160.99:8081/artifactory/libs-release</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
     <build>
         <plugins>
             <plugin>

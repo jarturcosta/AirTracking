@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Air Tracking</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/pagestyles.css">
+        <link rel="stylesheet" href="css/search.css">
+        <link rel="stylesheet" href="css/grid.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+
+        <div class="header">
+            <h1>AIR TRACKING</h1>
+            <p>Track every flight and plane</p>
+        </div>
+
+        <div class="navbar topnav">
+            <a href="/">Home</a>
+            <a href="/map">Map</a>
+            <a href="/flight">Flight statistics</a>
+            <a href="/plane">Plane statistics</a>
+            <a href="/track">Track</a>
+            <a href="/faq">FAQ</a>
+            <div class="search-container">
+                <input type="text" placeholder="Search..." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h4>AIRPORT TRACKING</h4>
+                    <br>
+                    <img src="img/track-airport.jpg" alt="at" style="width:500px;height:250px;">
+                    <div class="w3-container">
+                        <br>
+                        <div class="w3-dropdown-hover">
+                            <button class="w3-button">Airport</button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a href="/trackairport?country=portugal" class="w3-bar-item w3-button">Portugal</a>
+                                <a href="/trackairport?country=spain" class="w3-bar-item w3-button">Spain</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <h4>FLIGHT TRACKING</h4>
+                    <br>
+                    <img src="img/track-flight.jpg" alt="at" style="width:500px;height:250px;">
+                    <div class="w3-container">
+                        <br>
+                        <div class="w3-dropdown-hover">
+                            <button class="w3-button">Flight</button>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                                <a href="/trackflight" class="w3-bar-item w3-button">Flight01</a>
+                                <a href="/trackflight" class="w3-bar-item w3-button">Flight02</a>
+                                <a href="/trackflight" class="w3-bar-item w3-button">Flight03</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <!--h2>Footer</h2-->
+        </div>
+
+    </body>
+</html>
+
