@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    
     <head>
         <title>Air Tracking</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/pagestyles.css">
-        <link rel="stylesheet" href="css/search.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/pagestyles.css" />
+        <link rel="stylesheet" href="/css/search.css" />
+        <link rel="stylesheet" href="/css/countrystyles.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
+        <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
     </head>
-    <body>
+    <body style="overflow: auto">
         <div class="header">
             <h1>AIR TRACKING</h1>
             <p>Track every flight and plane</p>
         </div>
 
         <div class="navbar topnav">
-            <a href="/homepage">Home</a>
+            <a href="/">Home</a>
             <a href="/map">Map</a>
             <a href="/flight">Flight statistics</a>
             <a href="/plane">Plane statistics</a>
@@ -33,15 +35,19 @@
                 <center>
                     <h2>Airport tracking</h2>
                     <br>
-                    ${countryName}
+                    <p th:text="${country}" />
                 </center>
                 <h4>Events:</h4>
                 <p>Flight01 arriving soon</p>
                 <p>Flight01 departing</p>
             </div>
             <div class="main">
-                <center><img src="img/airtracking.png" alt="at" style="width:300px;height:100px;"></center>
-
+                <center> <img src="img/airtracking.png" alt="at" style="width:300px;height:100px;"> </center>
+                
+                <svg width="1200" height="800"></svg>
+                <script th:if="${country == 'PORTUGAL'}" src="/js/portugalmap.js"></script>
+                <script th:if="${country == 'SPAIN'}" src="/js/spainmap.js"></script>
+                
             </div>
         </div>
 

@@ -9,7 +9,7 @@ public class HomepageController {
 
     @GetMapping("/")
     public String homepage(Model model) {
-        return "homepage.html";
+        return "homepage";
     }
 
 }

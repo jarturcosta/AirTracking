@@ -9,7 +9,7 @@ public class PlaneController {
 
     @GetMapping("/plane")
     public String plane(Model model) {
-        return "plane.html";
+        return "plane";
     }
     
 }

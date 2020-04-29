@@ -12,22 +12,19 @@ public class TrackController {
 
     @GetMapping("/track")
     public String track(Model model) {
-        return "track.html";
+        return "track";
     }
     
-    @RequestMapping("/trackairport")
-    public ModelAndView trackAirport(@RequestParam("country") String countryName) {
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("country", countryName);
-        System.out.println(countryName);
-        mv.setViewName("trackairport.html");
-        return mv;
-        //return "trackairport.html";
+    @GetMapping("/trackairport")
+    public String trackAirport(@RequestParam("country") String countryName, Model model) {
+        model.addAttribute("country", countryName.toUpperCase());
+        return "trackairport";
     }
     
     @GetMapping("/trackflight")
-    public String trackFlight(Model model) {
-        return "trackflight.html";
+    public String trackFlight(@RequestParam("flight") String flightName, Model model) {
+        model.addAttribute("flight", flightName.toUpperCase());
+        return "trackflight";
     }
 
 }
