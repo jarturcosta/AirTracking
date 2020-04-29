@@ -22,13 +22,13 @@ public class AirtrackingApplication implements CommandLineRunner{
     public void run(String[] args) throws Exception {
         System.out.println("Hey");
         
-        String allStates = KafkaFlightStateProducer.getAllStates();
+        //String allStates = KafkaFlightStateProducer.getAllStates();
         
         //KafkaFlightStateConsumer c = new KafkaFlightStateConsumer();
         //c.run();
         
-        KafkaFlightStateProducer producer = new KafkaFlightStateProducer("ESP52-test2", Boolean.FALSE);
-        producer.run();
+        //KafkaFlightStateProducer producer = new KafkaFlightStateProducer("ESP52-test2", Boolean.FALSE);
+        //producer.run();
 
     }
     

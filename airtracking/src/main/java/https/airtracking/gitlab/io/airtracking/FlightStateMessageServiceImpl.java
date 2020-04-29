@@ -39,8 +39,8 @@ public class FlightStateMessageServiceImpl implements FlightStateMessageService 
     }
 
     @Override
-    public FlightStateMessage findTopByOrderByCreatedDesc() {
-        return flightStateMessageRepository.findTopByOrderByCreatedDesc();
+    public FlightStateMessage findTopByOrderByTimeDesc() {
+        return flightStateMessageRepository.findTopByOrderByTimeDesc();
     }
     
 }

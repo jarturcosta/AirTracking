@@ -17,9 +17,6 @@ public class FlightStats {
     
     public float avg_speed;
     
-    public float avg_vertical_rate;
-    
-    
-    
+    public float avg_vertical_rate;   
     
 }

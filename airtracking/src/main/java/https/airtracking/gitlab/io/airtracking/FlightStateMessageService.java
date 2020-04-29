@@ -20,7 +20,7 @@ public interface FlightStateMessageService {
     
     FlightStateMessage findByTime(int time);
     
-    FlightStateMessage findTopByOrderByCreatedDesc();
+    FlightStateMessage findTopByOrderByTimeDesc();
         
     void saveOrUpdateFlightStateMessage(FlightStateMessage message);
     
