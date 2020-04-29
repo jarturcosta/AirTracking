@@ -11,8 +11,8 @@
     //const projection = d3.geoMercator();
 	
 	// Start Zoom in PT
-	const pt = [38.7166700, -9.1333300];
-    const projection = d3.geoNaturalEarth1().scale(1100).translate([600,1200]);
+    const pt = [-9.1333300, 38.7166700];
+    const projection = d3.geoNaturalEarth1().center(pt).scale(1100);
     const pathGenerator = d3.geoPath().projection(projection);
 	
 	const g = svg.append('g')
