@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="css/search.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
         <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
         <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
     </head>
@@ -35,7 +36,8 @@
 
         <div class="row">
             <svg width="2000" height="800"></svg>
-            <script src="js/worldmap.js"></script>
+            <!--<script src="/js/worldmap.js"></script>-->
+            <p th:text="${flightstates}" />
         </div>
 
         <div class="footer">
@@ -43,4 +45,131 @@
         </div>
 
     </body>
+    
+    <script>
+        
+        var url = "http://dummy.restapiexample.com/api/v1/employees";
+        
+        $.getJSON(url, function(data) {
+            console.log(data);
+        });
+        
+    </script>
+    
+    <script th:inline="javascript">
+    
+        (function (d3,topojson) {
+            'use strict';
+
+            var margin = {top: 0, right: 0, bottom: 0, left: 0},
+                    width = 960 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom;
+
+            const svg = d3.select('svg');
+
+            // Start Zoom in PT
+            const pt = [-9.1333300, 38.7166700];
+            const projection = d3.geoNaturalEarth1().center(pt).scale(1100);
+            const pathGenerator = d3.geoPath().projection(projection);
+
+            const g = svg.append('g')
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            g.append('path')
+                    .attr('class', 'sphere')
+                    .attr('d', pathGenerator({type: 'Sphere'}));
+
+            // PANNING
+            var worldBox = svg.node().getBBox();
+            const marg = 200;
+            const worldTopLeft = [worldBox.x - marg, worldBox.y - marg];
+            const worldBottomRight = [
+                    worldBox.x + worldBox.width + marg,
+                    worldBox.y + worldBox.height + marg
+            ];
+
+            //ZOOM
+            const zoom = d3.zoom()
+                    .scaleExtent([0.2, 5])
+                    .translateExtent([worldTopLeft, worldBottomRight])
+                    .on("zoom", () => {
+                            g.attr('transform', d3.event.transform);
+                            g.attr("stroke-width", 1 / d3.event.transform.k);
+                    }); 
+            svg.call(zoom);
+
+            // ZONAS DE TESTE
+            /*var places = [
+              {
+                name: "Porto",
+                location: {
+                  latitude: 41.1496100,
+                  longitude: -8.6109900
+                }
+              },
+              {
+                name: "Lisboa",
+                location: {
+                  latitude: 38.7166700,
+                  longitude: -9.1333300
+                }
+              },
+              {
+                name: "Melbourne",
+                location: {
+                  latitude: -37.8140000,
+                  longitude: 144.9633200
+                }
+              },
+              {
+                name: "Pequim",
+                location: {
+                  latitude: 39.9075000,
+                  longitude: 116.3972300
+                }
+              },
+              {
+                name: "Perth",
+                location: {
+                  latitude: -31.9522400,
+                  longitude: 115.8614000
+                }
+              }
+            ]*/
+            
+            var planes = [[${flightstates}]];
+            console.log(planes);
+
+            d3.json('https://unpkg.com/world-atlas@1.1.4/world/50m.json')
+              .then(data => {
+
+                const countries = topojson.feature(data, data.objects.countries);
+
+                // countries draw
+                g.selectAll('path').data(countries.features)
+                  .enter()
+                    .append('path')
+                    .attr('class', 'country')
+                    .attr('d', pathGenerator);
+
+                // place dots
+                g.selectAll(".pin")
+                  .data(planes)
+                  .enter()
+                    .append("circle", ".pin")
+                    .attr("class", "pin")
+                    .attr("r", 3)
+                    .attr("transform", function(d) {
+                    return "translate(" + projection([
+                        d.longitude,
+                        d.latitude
+                      ]) + ")";
+                    })
+                    .append("title")
+                        .text(d => d.icao24);
+                });
+
+          }(d3,topojson));
+    </script>
+    
 </html>

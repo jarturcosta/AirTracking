@@ -1,8 +1,11 @@
 package https.airtracking.gitlab.io.airtrackingwebapp.controllers;
 
+import https.airtracking.gitlab.io.airtrackingwebapp.services.FlightStateMessage;
+import https.airtracking.gitlab.io.airtrackingwebapp.services.RestService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,20 +42,26 @@ public class FlightController {
         }
         
         if(flight != null && dateConfirm){
+            
+            /* pseudo teste */
+            RestService restService = new RestService(new RestTemplateBuilder());
+            FlightStateMessage fsm = restService.getFlightStateMessageObject();
+            System.out.println(fsm.getStates().get(0).getLatitude());
+            
             model.addAttribute("name", flight);
             model.addAttribute("maxspeed", "TODO1");
             model.addAttribute("avgspeed", "TODO2");
-            model.addAttribute("maxalt", "TODO3");
+            //model.addAttribute("maxalt", "TODO3");
             model.addAttribute("avgvertical", "TODO4");
-            model.addAttribute("number", "TODO5");
+            //model.addAttribute("number", "TODO5");
         }
         else{
             model.addAttribute("name", " ");
             model.addAttribute("maxspeed", " ");
             model.addAttribute("avgspeed", " ");
-            model.addAttribute("maxalt", " ");
+            //model.addAttribute("maxalt", " ");
             model.addAttribute("avgvertical", " ");
-            model.addAttribute("number", " ");
+            //model.addAttribute("number", " ");
         }
         
         return "flight";
