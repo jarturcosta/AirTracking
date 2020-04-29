@@ -20,6 +20,8 @@ public interface FlightStateMessageRepository extends MongoRepository<FlightStat
     
     
     FlightStateMessage findByTime(int time);
+    
+    FlightStateMessage findTopByOrderByTimeDesc();
         
     
 }

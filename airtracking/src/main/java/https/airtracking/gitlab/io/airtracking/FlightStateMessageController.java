@@ -29,7 +29,7 @@ public class FlightStateMessageController {
         return flightStateService.findAll();
     }
     
-    @GetMapping(value = "/{time}")
+    @GetMapping(value = "byTime/{time}")
     public FlightStateMessage getFlightStateMessageByTime(@PathVariable("time") int time) {
         return flightStateService.findByTime(time);
     }
@@ -40,8 +40,12 @@ public class FlightStateMessageController {
         flightStateService.saveOrUpdateFlightStateMessage(flightStateMessage);
         return new ResponseEntity("Flight state added successfully", HttpStatus.OK);
     }
-
     
+    @GetMapping(value = "/last")
+    public FlightStateMessage getLastFlightStateMessage() {
+        return flightStateService.findTopByOrderByTimeDesc();
+    }
+
     
     
     
