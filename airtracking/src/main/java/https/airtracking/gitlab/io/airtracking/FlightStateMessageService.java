@@ -19,6 +19,8 @@ public interface FlightStateMessageService {
     List<FlightStateMessage> findAll();
     
     FlightStateMessage findByTime(int time);
+    
+    FlightStateMessage findTopByOrderByCreatedDesc();
         
     void saveOrUpdateFlightStateMessage(FlightStateMessage message);
     

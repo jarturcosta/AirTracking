@@ -37,5 +37,10 @@ public class FlightStateMessageServiceImpl implements FlightStateMessageService 
     public void saveOrUpdateFlightStateMessage(FlightStateMessage message) {
         flightStateMessageRepository.save(message);
     }
+
+    @Override
+    public FlightStateMessage findTopByOrderByCreatedDesc() {
+        return flightStateMessageRepository.findTopByOrderByCreatedDesc();
+    }
     
 }

@@ -40,8 +40,12 @@ public class FlightStateMessageController {
         flightStateService.saveOrUpdateFlightStateMessage(flightStateMessage);
         return new ResponseEntity("Flight state added successfully", HttpStatus.OK);
     }
-
     
+    @GetMapping(value = "/last")
+    public FlightStateMessage getLastFlightStateMessage() {
+        return flightStateService.findTopByOrderByCreatedDesc();
+    }
+
     
     
     
