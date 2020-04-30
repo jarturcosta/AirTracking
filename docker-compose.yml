@@ -8,14 +8,14 @@ services:
       - "27017:27017"
   airtracking:
     build:
-      context: ./airtracking-bin
+      context: ./airtracking
     ports:
       - "9069:8005"
     depends_on:
       - mongo
   airtrackingwebapp:
     build:
-      context: ./airtrackingwebapp-bin
+      context: ./airtrackingwebapp
     ports:
       - "9070:8080"
 
