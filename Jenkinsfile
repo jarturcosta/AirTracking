@@ -10,8 +10,8 @@ node {
     }
 
     stage('Deploy Artifact') {
-        sh 'mvn -s settings.xml -f airtracking deploy'
-        sh 'mvn -s settings.xml -f airtrackingwebapp deploy'
+        sh 'mvn -s settings.xml -f airtracking deploy -DskipTests'
+        sh 'mvn -s settings.xml -f airtrackingwebapp deploy -DskipTests'
     }
 
     stage('Deploy Runtime') {
