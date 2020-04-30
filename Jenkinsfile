@@ -25,9 +25,9 @@ node {
         sshagent (credentials: ['airtracking-runtime']) {
             sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 rm -rf airtraking-bin; rm -rf airtrakingwebapp-bin; mkdir airtracking-bin; mkdir airtrackingwebapp-bin"
 
-            sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 echo ${ApiDockerfile} > airtracking-bin/Dockerfile"
-            sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 echo ${WebDockerfile} > airtrackingwebapp-bin/Dockerfile"
-            sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 echo ${Compose} > docker-compose.yml"
+            sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 echo '${ApiDockerfile}' > airtracking-bin/Dockerfile"
+            sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 echo '${WebDockerfile}' > airtrackingwebapp-bin/Dockerfile"
+            sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 echo '${Compose}' > docker-compose.yml"
             
             sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 sh pull.sh ${APIVersion} ${WebVersion}"
         }
