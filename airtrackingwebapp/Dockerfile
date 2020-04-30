@@ -4,4 +4,4 @@ USER spring:spring
 ARG JAR_FILE=*.war
 COPY ${JAR_FILE} app.war
 ENTRYPOINT ["java","-jar","/app.war"]
-EXPOSE 8005
+EXPOSE 8080
