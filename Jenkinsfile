@@ -23,7 +23,7 @@ node {
         def Compose = sh script: 'cat docker-compose.yml', returnStdout: true
 
         sshagent (credentials: ['airtracking-runtime']) {
-            sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 rm -r airtraking-bin; rm -r airtrakingwebapp-bin; mkdir airtracking-bin; mkdir airtrackingwebapp-bin"
+            sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 rm -rf airtraking-bin; rm -rf airtrakingwebapp-bin; mkdir airtracking-bin; mkdir airtrackingwebapp-bin"
 
             sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 echo ${ApiDockerfile} > airtracking-bin/Dockerfile"
             sh "ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 echo ${WebDockerfile} > airtrackingwebapp-bin/Dockerfile"
