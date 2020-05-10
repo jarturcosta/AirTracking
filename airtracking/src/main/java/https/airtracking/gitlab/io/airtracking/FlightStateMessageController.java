@@ -46,6 +46,12 @@ public class FlightStateMessageController {
     public FlightStateMessage getLastFlightStateMessage() {
         return flightStateService.findTopByOrderByTimeDesc();
     }
+    
+    @DeleteMapping(value = "byTime/{time}")
+    public ResponseEntity<?>  deleteByTime(@PathVariable("time") int time) {
+        flightStateService.deleteByTime(time);
+        return new ResponseEntity("Flight state deleted successfully", HttpStatus.OK);
+    }
 
     
     

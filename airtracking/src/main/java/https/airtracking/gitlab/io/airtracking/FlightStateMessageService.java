@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 public interface FlightStateMessageService {
     List<FlightStateMessage> findAll();
     
+    void deleteByTime(int time);
+    
     FlightStateMessage findByTime(int time);
     
     FlightStateMessage findTopByOrderByTimeDesc();
