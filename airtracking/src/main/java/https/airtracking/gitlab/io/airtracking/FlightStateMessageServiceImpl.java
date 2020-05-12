@@ -42,5 +42,10 @@ public class FlightStateMessageServiceImpl implements FlightStateMessageService 
     public FlightStateMessage findTopByOrderByTimeDesc() {
         return flightStateMessageRepository.findTopByOrderByTimeDesc();
     }
+
+    @Override
+    public void deleteByTime(int time) {
+        flightStateMessageRepository.deleteByTime(time);
+    }
     
 }

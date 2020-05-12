@@ -27,7 +27,7 @@ public class AirtrackingApplication implements CommandLineRunner{
         //KafkaFlightStateConsumer c = new KafkaFlightStateConsumer();
         //c.run();
         
-        //KafkaFlightStateProducer producer = new KafkaFlightStateProducer("ESP52-test2", Boolean.FALSE);
+        KafkaFlightStateProducer producer = new KafkaFlightStateProducer("ESP52-test2", Boolean.FALSE);
         //producer.run();
 
     }
