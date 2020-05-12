@@ -30,6 +30,11 @@ public class RestService {
         return this.restTemplate.getForObject(url, String.class);
     }
     
+    public String getAllFlightStateMessagePlainJSON() {
+        String url = "http://192.168.160.103:9069/flightstates";
+        return this.restTemplate.getForObject(url, String.class);
+    }
+    
     public FlightStateMessage getFlightStateMessageObject() {
         /*String url = "http://192.168.160.103:9069/flightstates/last";
         String jsons = this.restTemplate.getForObject(url, String.class);*/
@@ -74,6 +79,15 @@ public class RestService {
         Gson gson = new Gson();
         fsm = gson.fromJson(jsons, FlightStateMessage.class);
         return fsm;
+    }
+    
+    public FlightStateMessage getAllFlightStateMessageObject() {
+        String url = "http://192.168.160.103:9069/flightstates";
+        String jsons = this.restTemplate.getForObject(url, String.class);
+        FlightStateMessage fsm = null;
+        Gson gson = new Gson();
+        fsm = gson.fromJson(jsons, FlightStateMessage.class);
+        return fsm; 
     }
 }
 
