@@ -87,12 +87,14 @@ pipeline {
                         if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'API') {
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtracking$ --filter status=running | xargs -r docker stop"'
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtracking$ --filter status=exited | xargs -r docker rm"'
+                            sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker images -qa --filter label=name=airtracking | xargs -r docker rmi"'
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 docker run -d -p 9069:8005 --name esp52-airtracking 192.168.160.99:5000/esp52-airtracking'
                         }
 
                         if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'WebApp') {
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtrackingwebapp$ --filter status=running | xargs -r docker stop"'
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtrackingwebapp$ --filter status=exited | xargs -r docker rm"'
+                            sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker images -qa --filter label=name=airtrackingwebapp | xargs -r docker rmi"'
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 docker run -d -p 9070:8080 --name esp52-airtrackingwebapp 192.168.160.99:5000/esp52-airtrackingwebapp'
                         }
                     }

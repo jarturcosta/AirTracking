@@ -4,4 +4,5 @@ USER spring:spring
 ARG JAR_FILE=target/*.war
 COPY ${JAR_FILE} app.war
 ENTRYPOINT ["java","-jar","/app.war"]
+LABEL "name"="airtrackingwebapp"
 EXPOSE 8080
