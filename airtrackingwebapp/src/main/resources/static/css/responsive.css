@@ -73,7 +73,7 @@
          height: 41px;
     }
      .top-header .navbar .navbar-collapse ul li a:hover, .top-header .navbar .navbar-collapse ul li a:focus {
-         color: #0892fd;
+         color: white;
     }
      .slide_text p {
          display: none;
