@@ -1,0 +1,32 @@
+
+.btn-air {
+    background-color: lightblue;
+    border: none;
+    color: #000099;
+    padding: 15px 42px;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;   
+}
+
+.btn-air:hover {
+  background-color: #0892fd;
+  color: white;
+  cursor: pointer;
+}
+
+.select-air {
+    background-color: #0892fd;
+    border: none;
+    color: white;
+    padding: 15px 42px;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}

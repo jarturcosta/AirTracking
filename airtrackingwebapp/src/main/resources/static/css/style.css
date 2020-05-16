@@ -266,7 +266,7 @@ LOADER
      z-index: 20;
      background-position: left;
      background-repeat: no-repeat;
-     background-color: #0892fd;
+     background-color: #05223d; /* #0892fd */
      background-size: auto 100%;
 }
  .top-header .navbar .navbar-collapse ul li a {
@@ -276,7 +276,7 @@ LOADER
      position: relative;
      font-weight: 400;
      overflow: hidden;
-     color: #000;
+     color: white;
 }
  a.navbar-brand {
      left: 35px;
@@ -286,7 +286,7 @@ LOADER
 }
  .top-header .navbar .navbar-collapse ul li a:hover, .top-header .navbar .navbar-collapse ul li a:focus {
      background: transparent;
-     color: #fff;
+     color: #0892fd;
      border-radius: 0;
 }
  .search_icon.nav-link img {
@@ -508,6 +508,20 @@ LOADER
      font-weight: 300;
      margin-top: 50px;
 }
+
+.contact_bt:hover {
+     width: 145px;
+     height: 50px;
+     background: #07528d;
+     color: #4eb1fd;
+     float: left;
+     line-height: 48px;
+     text-align: center;
+     font-size: 16px;
+     font-weight: 300;
+     margin-top: 50px;
+}
+
 .slide_text {
     margin-top: 21%;
 }
