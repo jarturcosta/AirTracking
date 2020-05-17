@@ -5,13 +5,15 @@
  */
 package https.airtracking.gitlab.io.airtracking;
 
-import https.airtracking.gitlab.io.airtracking.Models.FlightState;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 
 /**
  *
@@ -27,6 +29,7 @@ public class FlightStateMessageController {
     
     @GetMapping(value = "/")
     public List<FlightStateMessage> getAllFlightStateMessages() {
+        Logger.getLogger(KafkaFlightStateProducer.class.getName()).log(Level.INFO, "/flightstates/");
         return flightStateService.findAll();
     }
     
