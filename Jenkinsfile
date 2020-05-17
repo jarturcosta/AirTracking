@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'API') {
-                        sh 'mvn -f airtracking clean package -DskipTests'
+                        sh 'mvn -f airtracking clean package -DskipTests -Pprod'
                     }
                     
                     if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'WebApp') {
@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'API') {
-                        sh 'mvn -s settings.xml -f airtracking deploy -DskipTests'
+                        sh 'mvn -s settings.xml -f airtracking deploy -DskipTests -Pprod'
                     }
 
                     if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'WebApp') {
