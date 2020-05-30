@@ -157,43 +157,33 @@
                 svg.call(zoom);
 
                 // ZONAS DE TESTE
-                /*var places = [
+                var places = [
                   {
                     name: "Porto",
-                    location: {
-                      latitude: 41.1496100,
-                      longitude: -8.6109900
-                    }
+                    latitude: 41.1496100,
+                    longitude: -8.6109900
                   },
                   {
                     name: "Lisboa",
-                    location: {
-                      latitude: 38.7166700,
-                      longitude: -9.1333300
-                    }
+                    latitude: 38.7166700,
+                    longitude: -9.1333300
                   },
                   {
                     name: "Melbourne",
-                    location: {
-                      latitude: -37.8140000,
-                      longitude: 144.9633200
-                    }
+                    latitude: -37.8140000,
+                    longitude: 144.9633200
                   },
                   {
                     name: "Pequim",
-                    location: {
-                      latitude: 39.9075000,
-                      longitude: 116.3972300
-                    }
+                    latitude: 39.9075000,
+                    longitude: 116.3972300
                   },
                   {
                     name: "Perth",
-                    location: {
-                      latitude: -31.9522400,
-                      longitude: 115.8614000
-                    }
+                    latitude: -31.9522400,
+                    longitude: 115.8614000
                   }
-                ]*/
+                ]
             
                 /*
                 var planes = [[${flightstates}]];
@@ -222,7 +212,7 @@
             
                 console.log(lastdata);
 
-                var planes = [];
+                var planes = places;
                 /*
                 lastdata.states.forEach(states => {
                     planes.push(states);
@@ -243,12 +233,12 @@
                         .attr('d', pathGenerator);
 
                     // place dots
-                    g.selectAll(".pin")
+                    g.selectAll("circle")
                       .data(planes)
                       .enter()
-                        .append("circle", ".pin")
-                        .attr("class", "pin")
-                        .attr("r", 3)
+                        .append("image")
+                        .attr("xlink:href", "img/map-plane.png")
+                        .attr("class", "plane")
                         .attr("transform", function(d) {
                         return "translate(" + projection([
                             d.longitude,
