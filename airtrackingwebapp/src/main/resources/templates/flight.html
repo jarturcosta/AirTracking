@@ -29,11 +29,9 @@
         <link rel="stylesheet" href="css/responsive.css" />
         <!-- Custom CSS -->
         <link rel="stylesheet" href="css/custom.css" />
-        <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />-->
         <link rel="stylesheet" href="css/buttonstyles.css" />
         
     </head>
-
     
     <body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98">
 
@@ -156,7 +154,6 @@
 	<a href="#" id="scroll-to-top" class="hvr-radial-out"><i class="fa fa-angle-up"></i></a>
 
         <!-- ALL JS FILES -->
-        <script src="js/jquery.min.js"></script>
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <!-- ALL PLUGINS -->
@@ -169,7 +166,18 @@
         <script src="js/isotope.min.js"></script>
         <script src="js/images-loded.min.js"></script>
         <script src="js/custom.js"></script>   
+        
+        <script src="js/jquery.min.js"></script>
+        <script>
+            var url = 'http://192.168.160.103:9069/flightstates/last';
+            $.getJSON(url, function(data) {
+                //console.log(data);
+                var planes = data.states;
+                console.log(planes)
+            });
+            console.log("ola")
+        </script>
 
-    </body>
+    </body> 
     
 </html>

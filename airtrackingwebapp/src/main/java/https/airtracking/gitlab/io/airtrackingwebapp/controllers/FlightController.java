@@ -16,11 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class FlightController {
-
+    
+    private Boolean post = false;
+    
     @GetMapping("/flight")
     public String flight(Model model, @RequestParam(required = false) String flight, @RequestParam(required = false) String start, @RequestParam(required = false) String end) throws ParseException {
         
-        System.out.println("======================" + start);
+        /*if (!post){
+            RestService rs = new RestService(new RestTemplateBuilder());
+            String a = rs.getFlightStateMessagePlainJSON();
+            System.out.println(a);
+        }*/
+        
+        //System.out.println("======================" + start);
         
         boolean dateConfirm = true;
         
