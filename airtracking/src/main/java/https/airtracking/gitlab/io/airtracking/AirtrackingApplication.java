@@ -1,5 +1,6 @@
 package https.airtracking.gitlab.io.airtracking;
 
+import https.airtracking.gitlab.io.airtracking.kafka.KafkaStatsConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,10 +24,5 @@ public class AirtrackingApplication implements CommandLineRunner {
     public void run(String[] args) throws Exception {
         System.out.println("Hey");
 
-        //String allStates = KafkaFlightStateProducer.getAllStates();
-        //KafkaFlightStateConsumer c = new KafkaFlightStateConsumer();
-        //c.run();
-        KafkaFlightStateProducer producer = new KafkaFlightStateProducer(env.getProperty("kafka.server"), "ESP52-test2", Boolean.FALSE);
-        //producer.run();
     }
 }
