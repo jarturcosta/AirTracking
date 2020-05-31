@@ -52,5 +52,10 @@ public class RestService {
         fsm = gson.fromJson(jsons, FlightStateMessage.class);
         return fsm; 
     }
+    
+    public String getStats(String flight){
+        String url = "http://192.168.160.103:9069/flightstates/getStats/" + flight;
+        return this.restTemplate.getForObject(url, String.class);
+    }
 }
 

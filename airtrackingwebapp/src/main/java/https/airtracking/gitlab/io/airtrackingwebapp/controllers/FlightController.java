@@ -5,6 +5,8 @@ import https.airtracking.gitlab.io.airtrackingwebapp.services.FlightStateMessage
 import https.airtracking.gitlab.io.airtrackingwebapp.services.RestService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -17,63 +19,58 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class FlightController {
     
-    private Boolean post = false;
+    private RestService rs = new RestService(new RestTemplateBuilder());
+    private FlightStateMessage fsm = null;
+    private List<FlightState> listfs = new ArrayList<>();
+    private List<String> listcountry = new ArrayList<>();
     
     @GetMapping("/flight")
-    public String flight(Model model, @RequestParam(required = false) String flight, @RequestParam(required = false) String start, @RequestParam(required = false) String end) throws ParseException {
+    public String flight(Model model, @RequestParam(required = false) String flight, @RequestParam(required = false) String country) throws ParseException {
         
-        /*if (!post){
-            RestService rs = new RestService(new RestTemplateBuilder());
-            String a = rs.getFlightStateMessagePlainJSON();
-            System.out.println(a);
-        }*/
         
-        //System.out.println("======================" + start);
-        
-        boolean dateConfirm = true;
-        
-        if(start != null && end != null){
-            if(!start.equals("") && !end.equals("")){
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date date1 = sdf.parse(start);
-                Date date2 = sdf.parse(end);
-
-                if (date1.compareTo(date2) > 0) {
-                    dateConfirm = false;
-                    System.out.println("Date1 is after Date2");
-                } else if (date1.compareTo(date2) < 0) {
-                    System.out.println("Date1 is before Date2");
-                } else if (date1.compareTo(date2) == 0) {
-                    System.out.println("Date1 is equal to Date2");
-                } else {
-                    System.out.println("How to get here?");
+        if (flight == null){
+            
+            fsm = rs.getFlightStateMessageObject();
+            listfs = fsm.getStates();
+            
+            for (FlightState fs : listfs){
+                if (!listcountry.contains(fs.getOrigin_contry()) && !"".equals(fs.getOrigin_contry())){
+                    listcountry.add(fs.getOrigin_contry());
                 }
             }
+            
+            Collections.sort(listcountry);
+            
+            model.addAttribute("flightslist", listfs);
+            model.addAttribute("countrieslist", listcountry);
         }
         
-        if(flight != null && dateConfirm){
+        if (flight != null){
             
-            /* pseudo teste */
-            RestService restService = new RestService(new RestTemplateBuilder());
-            FlightStateMessage fsm = restService.getAllFlightStateMessageObject();
+            //String jsons = rs.getStats(flight);
+            //System.out.println(jsons);
             
-            List<FlightState> listfs = fsm.getStates();
+            /*
+            for (FlightState f : listfs){
+                if (f.getIcao24() == flight){
+                    //...
+                }
+            }
+            */
             
+            model.addAttribute("flightslist", listfs);
+            model.addAttribute("countrieslist", listcountry);
             
-            model.addAttribute("name", flight);
-            model.addAttribute("maxspeed", "TODO1");
-            model.addAttribute("avgspeed", "TODO2");
-            //model.addAttribute("maxalt", "TODO3");
-            model.addAttribute("avgvertical", "TODO4");
-            //model.addAttribute("number", "TODO5");
+            model.addAttribute("icao24", flight);
+            model.addAttribute("max_speed", "TODO1");
+            model.addAttribute("avg_speed", "TODO2");
+            model.addAttribute("avg_vertical_rate", "TODO4");
         }
         else{
-            model.addAttribute("name", " ");
-            model.addAttribute("maxspeed", " ");
-            model.addAttribute("avgspeed", " ");
-            //model.addAttribute("maxalt", " ");
-            model.addAttribute("avgvertical", " ");
-            //model.addAttribute("number", " ");
+            model.addAttribute("icao24", " ");
+            model.addAttribute("max_speed", " ");
+            model.addAttribute("avg_speed", " ");
+            model.addAttribute("avg_vertical_rate", " ");
         }
         
         return "flight";
