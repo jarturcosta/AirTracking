@@ -5,7 +5,6 @@
  */
 package https.airtracking.gitlab.io.airtracking;
 
-import https.airtracking.gitlab.io.airtracking.Models.FlightState;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStats;
 import https.airtracking.gitlab.io.airtracking.kafka.KafkaIcao24Producer;
@@ -16,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 
 /**
  *

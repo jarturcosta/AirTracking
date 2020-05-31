@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStats;
 import java.util.Collections;
 import java.util.Properties;
+
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -36,35 +37,36 @@ public class KafkaStatsConsumer extends Thread{
     
     
     private static Consumer<Long, String> createConsumer() {
+
         final Properties props = new Properties();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                BOOTSTRAP_SERVERS);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG,
-                "KafkaExampleConsumer");
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-                LongDeserializer.class.getName());
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-                StringDeserializer.class.getName());
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "KafkaExampleConsumer");
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        
         // Create the consumer using props.
-        final Consumer<Long, String> consumer =
-                new KafkaConsumer<>(props);
-        // Subscribe to the topic.
+        final Consumer<Long, String> consumer = new KafkaConsumer<>(props);
         consumer.subscribe(Collections.singletonList(TOPIC));
+
         return consumer;
     }
-    
+
     @Override
     public void run() {
         final Consumer<Long, String> consumer = createConsumer();
         final int giveUp = 100;   int noRecordsCount = 0;
         Gson gson = new Gson();
+
         while (true) {
-            final ConsumerRecords<Long, String> consumerRecords =
-                    consumer.poll(1000);
-            if (consumerRecords.count()==0) {
+            final ConsumerRecords<Long, String> consumerRecords
+                    = consumer.poll(1000);
+            if (consumerRecords.count() == 0) {
                 noRecordsCount++;
-                if (noRecordsCount > giveUp) break;
-                else continue;
+                if (noRecordsCount > giveUp) {
+                    break;
+                } else {
+                    continue;
+                }
             }
             consumerRecords.forEach(record -> {
                 System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
@@ -74,6 +76,7 @@ public class KafkaStatsConsumer extends Thread{
                     System.out.println(record.value());
                     lastStats = gson.fromJson(record.value(), FlightStats.class);
                     
+
                 }
             });
             consumer.commitAsync();
