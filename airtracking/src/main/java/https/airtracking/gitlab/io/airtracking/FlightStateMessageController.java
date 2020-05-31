@@ -37,6 +37,7 @@ public class FlightStateMessageController {
     
     @GetMapping(value = "/")
     public List<FlightStateMessage> getAllFlightStateMessages() {
+        Logger.getLogger(KafkaIcao24Producer.class.getName()).log(Level.INFO, "/flightstates/");
         return flightStateService.findAll();
     }
     
