@@ -7,7 +7,11 @@ package https.airtracking.gitlab.io.airtracking;
 
 import https.airtracking.gitlab.io.airtracking.Models.FlightState;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
+import https.airtracking.gitlab.io.airtracking.Models.FlightStats;
+import https.airtracking.gitlab.io.airtracking.kafka.KafkaIcao24Producer;
+import https.airtracking.gitlab.io.airtracking.kafka.KafkaStatsConsumer;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +28,10 @@ public class FlightStateMessageController {
     
     @Autowired
     private FlightStateMessageService flightStateService;
+    
+    private KafkaIcao24Producer producer = new KafkaIcao24Producer("STATS_REQ", Boolean.TRUE);
+    private KafkaStatsConsumer consumer = new KafkaStatsConsumer();
+    private int statRequestCount = 0;
     
     @GetMapping(value = "/")
     public List<FlightStateMessage> getAllFlightStateMessages() {
@@ -51,6 +59,18 @@ public class FlightStateMessageController {
     public ResponseEntity<?>  deleteByTime(@PathVariable("time") int time) {
         flightStateService.deleteByTime(time);
         return new ResponseEntity("Flight state deleted successfully", HttpStatus.OK);
+    }
+    
+    @GetMapping(value = "getStats/{icao24}")
+    public FlightStats getFlightStatsByIcao24(@PathVariable("icao24") String icao24) throws InterruptedException, ExecutionException {
+
+        producer.sendMessage(icao24,statRequestCount);
+        statRequestCount++;
+        System.out.println(statRequestCount);
+        consumer.run();
+
+        return consumer.getLastStats();
+        
     }
 
     

@@ -3,9 +3,9 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package https.airtracking.gitlab.io.airtracking;
+package stats_service;
 
-import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,8 +18,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
+import models.FlightStats;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -31,14 +30,12 @@ import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.http.converter.json.Jackson2ObjectMapperBuilder.json;
 
 /**
  *
  * @author jarturcosta
  */
-public class KafkaFlightStateProducer extends Thread {
+public class KafkaFlightStateProducer{
     
     private final KafkaProducer producer;
     private String topic;
@@ -47,8 +44,6 @@ public class KafkaFlightStateProducer extends Thread {
     public static final int KAFKA_SERVER_PORT = 9092;
     public static final String CLIENT_ID = "SampleProducer";
     
-    @Autowired
-    private FlightStateMessageController controller;
     
     public KafkaFlightStateProducer(String topic, Boolean isAsync) {
         Properties properties = new Properties();
@@ -60,44 +55,47 @@ public class KafkaFlightStateProducer extends Thread {
         this.topic = topic;
         this.isAsync = isAsync;
     }
-    public void run() {
-        int messageNo = 1;
-        while (true) {
-            String messageStr = "empty";
+    public void sendStats(String icao24) {
+        String messageStr = "empty";
+        long startTime = System.currentTimeMillis();
+        if (isAsync) { // Send asynchronously
+            FlightStats f = new StatsCalculator().getStatsByFlight(icao24);
+
             try {
-                messageStr = getAllStates();
-            } catch (IOException ex) {
+                producer.send(new ProducerRecord(topic,
+                        f.toString())).get();
+                System.out.println("Sent: " + f.toString());
+            } catch (InterruptedException ex) {
+                Logger.getLogger(KafkaFlightStateProducer.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
                 Logger.getLogger(KafkaFlightStateProducer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            long startTime = System.currentTimeMillis();
-            if (isAsync) { // Send asynchronously
+        } else { // Send synchronously
+            try {
+
+                //FlightStateMessage fsm = FlightStateDeserializer.deserialize(messageStr);
+                //System.out.println("Sent message: (" + messageNo + ", " + fsm.toString2() + ")");
+                FlightStats f = new StatsCalculator().getStatsByFlight(icao24);
+
                 producer.send(new ProducerRecord(topic,
-                        messageNo,
-                        messageStr), new DemoCallBack(startTime, messageNo, messageStr));
-            } else { // Send synchronously
+                        f.toString())).get();
+
                 try {
-                    producer.send(new ProducerRecord(topic,
-                            messageNo,
-                            messageStr)).get();
-                    FlightStateMessage fsm = FlightStateDeserializer.deserialize(messageStr);
-                    System.out.println("Sent message: (" + messageNo + ", " + fsm.toString2() + ")");
-                    try {
-                        sendPost(fsm.toString());
-                    } catch (Exception e) {
-                        System.out.println("ERROR: " + e.toString());
-                        System.out.println("FSM: " + fsm.toString2());
-                    }
-                    
-                    
-                    System.out.println("Saved in BD! Time:" + fsm.getTime());
-                    
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                    // handle the exception
+                    //sendPost(fsm.toString());
+                } catch (Exception e) {
+                    System.out.println("ERROR: " + e.toString());
+                    //System.out.println("FSM: " + fsm.toString2());
                 }
+
+
+                //System.out.println("Saved in BD! Time:" + fsm.getTime());
+
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                // handle the exception
             }
-            ++messageNo;
         }
+
     }
     
     private void sendPost(String body) throws Exception {
