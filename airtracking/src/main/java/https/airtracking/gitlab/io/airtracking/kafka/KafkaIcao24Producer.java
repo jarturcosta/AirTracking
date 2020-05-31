@@ -12,8 +12,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -24,7 +22,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -40,8 +37,6 @@ public class KafkaIcao24Producer{
     private final KafkaProducer producer;
     private String topic;
     private Boolean isAsync;
-    public static final String KAFKA_SERVER_URL = "localhost";
-    public static final int KAFKA_SERVER_PORT = 9092;
     public static final String CLIENT_ID = "SampleProducer";
     public static int messageNo = 0;
 
@@ -49,11 +44,11 @@ public class KafkaIcao24Producer{
     
     public KafkaIcao24Producer(String topic, Boolean isAsync) {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", KAFKA_SERVER_URL + ":" + KAFKA_SERVER_PORT);
+        properties.put("bootstrap.servers", "localhost:9092");
         properties.put("client.id", CLIENT_ID);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        producer = new KafkaProducer(properties);
+        this.producer = new KafkaProducer(properties);
         this.topic = topic;
         this.isAsync = isAsync;
     }
@@ -69,20 +64,20 @@ public class KafkaIcao24Producer{
         post.setEntity(entity);
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
-             CloseableHttpResponse response = httpClient.execute(post)) {
+                CloseableHttpResponse response = httpClient.execute(post)) {
 
             System.out.println(EntityUtils.toString(response.getEntity()));
         }
 
     }
-    
+
     public static String getAllStates() throws MalformedURLException, IOException {
         URL url = new URL("https://opensky-network.org/api/states/all");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
-        
+
         int status = con.getResponseCode();
-        
+
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -91,7 +86,7 @@ public class KafkaIcao24Producer{
             content.append(inputLine);
         }
         in.close();
-        
+
         return content.toString();
     }
     
@@ -143,6 +138,6 @@ class DemoCallBack implements Callback {
             exception.printStackTrace();
         }
     }
+
 }
-    
 }
