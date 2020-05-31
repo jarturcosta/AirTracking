@@ -24,7 +24,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 public class KafkaStatsConsumer extends Thread{
     private final static String TOPIC = "STATS_RESP";
     private final static String BOOTSTRAP_SERVERS =
-            "localhost:9092";
+            "kafka:9092";
     private FlightStats lastStats;
 
     public KafkaStatsConsumer() {

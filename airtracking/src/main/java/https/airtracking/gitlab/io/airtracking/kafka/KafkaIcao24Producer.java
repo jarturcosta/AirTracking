@@ -44,7 +44,7 @@ public class KafkaIcao24Producer{
     
     public KafkaIcao24Producer(String topic, Boolean isAsync) {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "localhost:9092");
+        properties.put("bootstrap.servers", "kafka:9092");
         properties.put("client.id", CLIENT_ID);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
