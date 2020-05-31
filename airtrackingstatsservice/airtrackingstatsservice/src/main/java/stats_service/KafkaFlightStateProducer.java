@@ -1,6 +1,12 @@
-package https.airtracking.gitlab.io.airtracking;
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+package stats_service;
 
-import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +17,8 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.FlightStats;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -21,20 +29,26 @@ import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.env.Environment;
 
-public class KafkaFlightStateProducer extends Thread {
+/**
+ *
+ * @author jarturcosta
+ */
+public class KafkaFlightStateProducer{
+    
+    private final KafkaProducer producer;
 
-    private KafkaProducer producer;
     private String topic;
     private Boolean isAsync;
+    public static final String KAFKA_SERVER_URL = "localhost";
+    public static final int KAFKA_SERVER_PORT = 9092;
     public static final String CLIENT_ID = "SampleProducer";
+    
+    
+    public KafkaFlightStateProducer(String topic, Boolean isAsync) {
 
-    public KafkaFlightStateProducer(String kafka_server, String topic, Boolean isAsync) {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", kafka_server);
+        properties.put("bootstrap.servers", KAFKA_SERVER_URL + ":" + KAFKA_SERVER_PORT);
         properties.put("client.id", CLIENT_ID);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -42,44 +56,49 @@ public class KafkaFlightStateProducer extends Thread {
         this.topic = topic;
         this.isAsync = isAsync;
     }
+    public void sendStats(String icao24) {
+        String messageStr = "empty";
+        long startTime = System.currentTimeMillis();
+        if (isAsync) { // Send asynchronously
+            FlightStats f = new StatsCalculator().getStatsByFlight(icao24);
 
-    public void run() {
-        int messageNo = 1;
-        while (true) {
-            String messageStr = "empty";
+
             try {
-                messageStr = getAllStates();
-            } catch (IOException ex) {
+                producer.send(new ProducerRecord(topic,
+                        f.toString())).get();
+                System.out.println("Sent: " + f.toString());
+            } catch (InterruptedException ex) {
+                Logger.getLogger(KafkaFlightStateProducer.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
                 Logger.getLogger(KafkaFlightStateProducer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            long startTime = System.currentTimeMillis();
-            if (isAsync) { // Send asynchronously
-                this.producer.send(new ProducerRecord(topic,
-                        messageNo,
-                        messageStr), new DemoCallBack(startTime, messageNo, messageStr));
-            } else { // Send synchronously
+        } else { // Send synchronously
+            try {
+
+                //FlightStateMessage fsm = FlightStateDeserializer.deserialize(messageStr);
+                //System.out.println("Sent message: (" + messageNo + ", " + fsm.toString2() + ")");
+                FlightStats f = new StatsCalculator().getStatsByFlight(icao24);
+
+                producer.send(new ProducerRecord(topic,
+                        f.toString())).get();
+
                 try {
-                    this.producer.send(new ProducerRecord(topic,
-                            messageNo,
-                            messageStr)).get();
-                    FlightStateMessage fsm = FlightStateDeserializer.deserialize(messageStr);
-                    System.out.println("Sent message: (" + messageNo + ", " + fsm.toString2() + ")");
-                    try {
-                        sendPost(fsm.toString());
-                    } catch (Exception e) {
-                        System.out.println("ERROR: " + e.toString());
-                        System.out.println("FSM: " + fsm.toString2());
-                    }
+                    //sendPost(fsm.toString());
+                } catch (Exception e) {
+                    System.out.println("ERROR: " + e.toString());
+                    //System.out.println("FSM: " + fsm.toString2());
 
-                    System.out.println("Saved in BD! Time:" + fsm.getTime());
-
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                    // handle the exception
                 }
+
+
+                //System.out.println("Saved in BD! Time:" + fsm.getTime());
+
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                // handle the exception
             }
-            ++messageNo;
         }
+
     }
 
     private void sendPost(String body) throws Exception {
