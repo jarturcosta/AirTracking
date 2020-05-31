@@ -1,10 +1,12 @@
 package https.airtracking.gitlab.io.airtrackingwebapp.controllers;
 
+import https.airtracking.gitlab.io.airtrackingwebapp.services.FlightState;
 import https.airtracking.gitlab.io.airtrackingwebapp.services.FlightStateMessage;
 import https.airtracking.gitlab.io.airtrackingwebapp.services.RestService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,8 +47,10 @@ public class FlightController {
             
             /* pseudo teste */
             RestService restService = new RestService(new RestTemplateBuilder());
-            FlightStateMessage fsm = restService.getFlightStateMessageObject();
-            System.out.println(fsm.getStates().get(0).getLatitude());
+            FlightStateMessage fsm = restService.getAllFlightStateMessageObject();
+            
+            List<FlightState> listfs = fsm.getStates();
+            
             
             model.addAttribute("name", flight);
             model.addAttribute("maxspeed", "TODO1");

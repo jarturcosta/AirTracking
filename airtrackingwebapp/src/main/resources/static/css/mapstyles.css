@@ -6,22 +6,24 @@ body {
 .sphere {
   /*fill: #4242e4;*/
   /*fill: #29ABE2;*/
-  fill: white;
+  fill: #66b3ff;
 }
   
 .country {
   /*fill: lightgreen;*/
-  fill: grey;
-  stroke: grey;
-  /*stroke-opacity: 0.1;*/
-  stroke-width:0.05px;
+  fill: #66ff99;
+  stroke: darkgreen;
+  stroke-opacity: 1;
+  stroke-width:0.5px;
 }
 
 .country:hover {
-    fill:black;
+    fill:darkgreen;
 }
 
-.pin {
-  fill: red;
-  /*r: 3;*/
+.plane {
+    width: 20px;
+    height: 20px;
+    x: -8;
+    y: -8;
 }

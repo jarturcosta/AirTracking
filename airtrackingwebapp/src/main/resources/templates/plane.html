@@ -3,61 +3,137 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
     <head>
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- Mobile Metas -->
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <!-- Site Metas -->
         <title>Air Tracking</title>
-        <link rel="stylesheet" href="css/pagestyles.css" />
-        <link rel="stylesheet" href="css/search.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Site Icons -->
+        <link rel="shortcut icon" href="#" type="img/x-icon" />
+        <link rel="apple-touch-icon" href="#" />
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <!-- Pogo Slider CSS -->
+        <link rel="stylesheet" href="css/pogo-slider.min.css" />
+        <!-- Site CSS -->
+        <link rel="stylesheet" href="css/style.css" />
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="css/responsive.css" />
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/custom.css" />
+        <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />-->
+        <link rel="stylesheet" href="css/buttonstyles.css" />
+        
+        
     </head>
-    <body>
+    
+    <body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98">
 
-        <div class="header">
-            <h1>AIR TRACKING</h1>
-            <p>Track every flight and plane</p>
-        </div>
-
-        <div class="navbar topnav">
-            <a href="/">Home</a>
-            <a href="/map">Map</a>
-            <a href="/flight">Flight statistics</a>
-            <a href="/plane">Plane statistics</a>
-            <a href="/track">Track</a>
-            <a href="/faq">FAQ</a>
-            <div class="search-container">
-                <input type="text" placeholder="Search..." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
+        <!-- LOADER -->
+        <div id="preloader">
+            <div class="loader">
+                <img src="img/loader.gif" alt="#" />
             </div>
         </div>
+        <!-- end loader -->
+        <!-- END LOADER -->
 
-        <div class="row">
-            <div class="side">
-                <center>
-                    <h2>Plane Statistics</h2>
-                    <div class="fakeimg" style="height:240px;">
-                        <img src="img/plane.jpg" alt="plane" style="width:400px;height:200px;">
-                    </div><br>
+        <!-- Start header -->
+        <header class="top-header">
+            <nav class="navbar header-nav navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/"><img src="img/airtracking.png" alt="image" style="width:300px;height:100px;"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-wd" aria-controls="navbar-wd" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbar-wd">
+                        <ul class="navbar-nav">
+                            <li><a class="nav-link active" href="/">Home</a></li>
+                            <li><a class="nav-link" href="/map">Map</a></li>
+                            <li><a class="nav-link" href="/flight">Flight Statistics</a></li>
+                            <li><a class="nav-link" href="/plane">Plane Statistics</a></li>
+                        </ul>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" class="search-txt" placeholder="Search">
+                        <a class="search-btn">
+                            <img src="img/search_icon.png" alt="#" />
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- End header -->
+        
+        
+        <!-- section -->
+        <div class="section layout_padding theme_bg">
+            <div class="container">
+                <div class="row">
+                    
+                        
+                    <div style="flex: 0 0 65%">
+                        
+                        <h2 style="color:#ffffff; font-weight:bold">Plane Statistics</h2>
+                        <div class="fakeimg" style="height:240px;">
+                            <img src="img/plane.jpg" alt="plane" style="width:400px;height:200px;">
+                        </div>
+                        
+                    </div>
+                        
+                        
+                    <div>
+                        <form action="/plane.html">
+                            <h3 style="color:#ffffff; font-weight:bold"><label for="planes">Choose a plane:</label></h3>
 
-                    <form action="/plane.html">
-                        <center><h3><label for="planes">Choose a plane:</label></h3></center>
-
-                        <center><select id="planes" name="planes">
+                            <select class="select-air" id="planes" name="planes">
                                 <option value="test1">plane1</option>
                                 <option value="test2">plane2</option>
-                            </select></center>
-                        <center><h5><input type="submit" value="Submit"></h5></center>
-                    </form>
-
-                </center>
-            </div>
-            <div class="main">
-                <center><img src="img/airtracking.png" alt="at" style="width:300px;height:100px;"></center>
-
+                            </select>
+                            <p></p>
+                            <h5><input class="btn-air" type="submit" value="Submit"></h5>
+                        </form>
+                    </div>
+                </div>             
             </div>
         </div>
+        <!-- end section -->
+        
 
-        <div class="footer">
-            <!--h2>Footer</h2-->
+        <div class="footer_bottom" style="position: fixed; left: 0; bottom: 0; width: 100%;">            
+            <div class="container">
+                <div class="row">
+                </div>
+            </div>
         </div>
+	
+	<a href="#" id="scroll-to-top" class="hvr-radial-out"><i class="fa fa-angle-up"></i></a>
+
+        <!-- ALL JS FILES -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- ALL PLUGINS -->
+        <script src="js/jquery.magnific-popup.min.js"></script>
+        <script src="js/jquery.pogo-slider.min.js"></script>
+        <script src="js/slider-index.js"></script>
+        <script src="js/smoothscroll.js"></script>
+        <script src="js/form-validator.min.js"></script>
+        <script src="js/contact-form-script.js"></script>
+        <script src="js/isotope.min.js"></script>
+        <script src="js/images-loded.min.js"></script>
+        <script src="js/custom.js"></script>   
 
     </body>
 </html>

@@ -1,175 +1,118 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    
+
     <head>
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- Mobile Metas -->
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <!-- Site Metas -->
         <title>Air Tracking</title>
-        <link rel="stylesheet" href="css/pagestyles.css" />
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Site Icons -->
+        <link rel="shortcut icon" href="#" type="img/x-icon" />
+        <link rel="apple-touch-icon" href="#" />
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <!-- Pogo Slider CSS -->
+        <link rel="stylesheet" href="css/pogo-slider.min.css" />
+        <!-- Site CSS -->
+        <link rel="stylesheet" href="css/style.css" />
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="css/responsive.css" />
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/custom.css" />
+        
+        <!-- MAP -->
         <link rel="stylesheet" href="css/mapstyles.css" />
-        <link rel="stylesheet" href="css/search.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
         <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
         <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
+        <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />-->
+        
     </head>
+    
+    <body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98">
 
-    <body>
-
-        <div class="header">
-            <h1>AIR TRACKING</h1>
-            <p>Track every flight and plane</p>
+        <!-- LOADER -->
+        <div id="preloader">
+            <div class="loader">
+                <img src="img/loader.gif" alt="#" />
+            </div>
         </div>
+        <!-- end loader -->
+        <!-- END LOADER -->
 
-        <div class="navbar topnav">
-            <a href="/">Home</a>
-            <a href="/map">Map</a>
-            <a href="/flight">Flight statistics</a>
-            <a href="/plane">Plane statistics</a>
-            <a href="/track">Track</a>
-            <a href="/faq">FAQ</a>
-            <div class="search-container">
-                <input type="text" placeholder="Search..." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
+        <!-- Start header -->
+        <header class="top-header">
+            <nav class="navbar header-nav navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/"><img src="img/airtracking.png" alt="image" style="width:300px;height:100px;"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-wd" aria-controls="navbar-wd" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbar-wd">
+                        <ul class="navbar-nav">
+                            <li><a class="nav-link active" href="/">Home</a></li>
+                            <li><a class="nav-link" href="/map">Map</a></li>
+                            <li><a class="nav-link" href="/flight">Flight Statistics</a></li>
+                            <li><a class="nav-link" href="/plane">Plane Statistics</a></li>
+                        </ul>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" class="search-txt" placeholder="Search">
+                        <a class="search-btn">
+                            <img src="img/search_icon.png" alt="#" />
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- End header -->
+
+        <div style="background-color:#66b3ff" class="row">
+            <div style="margin:auto;">
+                <svg width="1800" height="800"></svg>
             </div>
         </div>
 
-        <div class="row">
-            <svg width="2000" height="800"></svg>
-            <!--<script src="/js/worldmap.js"></script>-->
-            <p th:text="${flightstates}" />
-        </div>
 
-        <div class="footer">
-            <!--h2>Footer</h2-->
+        <div class="footer_bottom" style="position: fixed; left: 0; bottom: 0; width: 100%;">            
+            <div class="container">
+                <div class="row">
+                </div>
+            </div>
         </div>
+	
+	<a href="#" id="scroll-to-top" class="hvr-radial-out"><i class="fa fa-angle-up"></i></a>
+
+        <!-- ALL JS FILES -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- ALL PLUGINS -->
+        <script src="js/jquery.magnific-popup.min.js"></script>
+        <script src="js/jquery.pogo-slider.min.js"></script>
+        <script src="js/slider-index.js"></script>
+        <script src="js/smoothscroll.js"></script>
+        <script src="js/form-validator.min.js"></script>
+        <script src="js/contact-form-script.js"></script>
+        <script src="js/isotope.min.js"></script>
+        <script src="js/images-loded.min.js"></script>
+        <script src="js/custom.js"></script>   
 
     </body>
-    
-    <script>
-        
-        var url = "http://localhost:8005/flightstates/last";
-        
-        $.getJSON(url, function(data) {
-            console.log(data);
-        });
-        
-    </script>
-    
-    <script th:inline="javascript">
-    
-        (function (d3,topojson) {
-            'use strict';
-
-            var margin = {top: 0, right: 0, bottom: 0, left: 0},
-                    width = 960 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
-
-            const svg = d3.select('svg');
-
-            // Start Zoom in PT
-            const pt = [-9.1333300, 38.7166700];
-            const projection = d3.geoNaturalEarth1().center(pt).scale(1100);
-            const pathGenerator = d3.geoPath().projection(projection);
-
-            const g = svg.append('g')
-                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            g.append('path')
-                    .attr('class', 'sphere')
-                    .attr('d', pathGenerator({type: 'Sphere'}));
-
-            // PANNING
-            var worldBox = svg.node().getBBox();
-            const marg = 200;
-            const worldTopLeft = [worldBox.x - marg, worldBox.y - marg];
-            const worldBottomRight = [
-                    worldBox.x + worldBox.width + marg,
-                    worldBox.y + worldBox.height + marg
-            ];
-
-            //ZOOM
-            const zoom = d3.zoom()
-                    .scaleExtent([0.2, 5])
-                    .translateExtent([worldTopLeft, worldBottomRight])
-                    .on("zoom", () => {
-                            g.attr('transform', d3.event.transform);
-                            g.attr("stroke-width", 1 / d3.event.transform.k);
-                    }); 
-            svg.call(zoom);
-
-            // ZONAS DE TESTE
-            /*var places = [
-              {
-                name: "Porto",
-                location: {
-                  latitude: 41.1496100,
-                  longitude: -8.6109900
-                }
-              },
-              {
-                name: "Lisboa",
-                location: {
-                  latitude: 38.7166700,
-                  longitude: -9.1333300
-                }
-              },
-              {
-                name: "Melbourne",
-                location: {
-                  latitude: -37.8140000,
-                  longitude: 144.9633200
-                }
-              },
-              {
-                name: "Pequim",
-                location: {
-                  latitude: 39.9075000,
-                  longitude: 116.3972300
-                }
-              },
-              {
-                name: "Perth",
-                location: {
-                  latitude: -31.9522400,
-                  longitude: 115.8614000
-                }
-              }
-            ]*/
-            
-            var planes = [[${flightstates}]];
-            console.log(planes);
-
-            d3.json('https://unpkg.com/world-atlas@1.1.4/world/50m.json')
-              .then(data => {
-
-                const countries = topojson.feature(data, data.objects.countries);
-
-                // countries draw
-                g.selectAll('path').data(countries.features)
-                  .enter()
-                    .append('path')
-                    .attr('class', 'country')
-                    .attr('d', pathGenerator);
-
-                // place dots
-                g.selectAll(".pin")
-                  .data(planes)
-                  .enter()
-                    .append("circle", ".pin")
-                    .attr("class", "pin")
-                    .attr("r", 3)
-                    .attr("transform", function(d) {
-                    return "translate(" + projection([
-                        d.longitude,
-                        d.latitude
-                      ]) + ")";
-                    })
-                    .append("title")
-                        .text(d => d.icao24);
-                });
-
-          }(d3,topojson));
-    </script>
-    
+	
+    <script src="js/worldmap.js"></script>
+	
 </html>

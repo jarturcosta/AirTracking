@@ -6,25 +6,24 @@
 package stats_service;
 
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.FlightStats;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -38,6 +37,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 public class KafkaFlightStateProducer{
     
     private final KafkaProducer producer;
+
     private String topic;
     private Boolean isAsync;
     public static final String KAFKA_SERVER_URL = "localhost";
@@ -46,12 +46,13 @@ public class KafkaFlightStateProducer{
     
     
     public KafkaFlightStateProducer(String topic, Boolean isAsync) {
+
         Properties properties = new Properties();
         properties.put("bootstrap.servers", KAFKA_SERVER_URL + ":" + KAFKA_SERVER_PORT);
         properties.put("client.id", CLIENT_ID);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        producer = new KafkaProducer(properties);
+        this.producer = new KafkaProducer(properties);
         this.topic = topic;
         this.isAsync = isAsync;
     }
@@ -60,6 +61,7 @@ public class KafkaFlightStateProducer{
         long startTime = System.currentTimeMillis();
         if (isAsync) { // Send asynchronously
             FlightStats f = new StatsCalculator().getStatsByFlight(icao24);
+
 
             try {
                 producer.send(new ProducerRecord(topic,
@@ -85,6 +87,7 @@ public class KafkaFlightStateProducer{
                 } catch (Exception e) {
                     System.out.println("ERROR: " + e.toString());
                     //System.out.println("FSM: " + fsm.toString2());
+
                 }
 
 
@@ -97,7 +100,7 @@ public class KafkaFlightStateProducer{
         }
 
     }
-    
+
     private void sendPost(String body) throws Exception {
 
         HttpPost post = new HttpPost("http://192.168.160.103:9069/flightstates/");
@@ -108,20 +111,20 @@ public class KafkaFlightStateProducer{
         post.setEntity(entity);
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
-             CloseableHttpResponse response = httpClient.execute(post)) {
+                CloseableHttpResponse response = httpClient.execute(post)) {
 
             System.out.println(EntityUtils.toString(response.getEntity()));
         }
 
     }
-    
+
     public static String getAllStates() throws MalformedURLException, IOException {
         URL url = new URL("https://opensky-network.org/api/states/all");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
-        
+
         int status = con.getResponseCode();
-        
+
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -130,37 +133,42 @@ public class KafkaFlightStateProducer{
             content.append(inputLine);
         }
         in.close();
-        
+
         return content.toString();
     }
-    
-    
-class DemoCallBack implements Callback {
-    private final long startTime;
-    private final int key;
-    private final String message;
-    public DemoCallBack(long startTime, int key, String message) {
-        this.startTime = startTime;
-        this.key = key;
-        this.message = message;
-    }
-    /**
-     * onCompletion method will be called when the record sent to the Kafka Server has been acknowledged.
-     *
-     * @param metadata  The metadata contains the partition and offset of the record. Null if an error occurred.
-     * @param exception The exception thrown during processing of this record. Null if no error occurred.
-     */
-    public void onCompletion(RecordMetadata metadata, Exception exception) {
-        long elapsedTime = System.currentTimeMillis() - startTime;
-        if (metadata != null) {
-            System.out.println(
-                    "message(" + key + ", " + message + ") sent to partition(" + metadata.partition() +
-                    "), " +
-                    "offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
-        } else {
-            exception.printStackTrace();
+
+    class DemoCallBack implements Callback {
+
+        private final long startTime;
+        private final int key;
+        private final String message;
+
+        public DemoCallBack(long startTime, int key, String message) {
+            this.startTime = startTime;
+            this.key = key;
+            this.message = message;
+        }
+
+        /**
+         * onCompletion method will be called when the record sent to the Kafka
+         * Server has been acknowledged.
+         *
+         * @param metadata The metadata contains the partition and offset of the
+         * record. Null if an error occurred.
+         * @param exception The exception thrown during processing of this
+         * record. Null if no error occurred.
+         */
+        public void onCompletion(RecordMetadata metadata, Exception exception) {
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            if (metadata != null) {
+                System.out.println(
+                        "message(" + key + ", " + message + ") sent to partition(" + metadata.partition()
+                        + "), "
+                        + "offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
+            } else {
+                exception.printStackTrace();
+            }
         }
     }
-}
-    
+
 }
