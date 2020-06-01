@@ -1,0 +1,17 @@
+https://docs.google.com/document/d/1g7Q8rDOs7gavrtNi8pJbhQiJi6N-QHH4IPB_oxMXL5A/edit#
+
+https://docs.google.com/document/d/100RixpXgvAMYlzgXE1ha10JZwxR_Sm52Yv04E-7UvHA/edit#
+
+-
+
+a short but clear description of the system objectives (André Moreira)
+
+an architectural description of your system (Gil)
+
+developer perspective (Diogo Mota)
+
+operations perspective (Diogo Alves)
+
+testing (João Artur)
+
+final considerations (André Moreira)

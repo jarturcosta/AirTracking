@@ -22,9 +22,9 @@ public class PlaneController {
     private List<String> listcountry = new ArrayList<>();
     
     @GetMapping("/plane")
-    public String plane(Model model, @RequestParam(required = false) String plane, @RequestParam(required = false) String country) throws ParseException {
+    public String plane(Model model, @RequestParam(required = false) String planes, @RequestParam(required = false) String country) throws ParseException {
         
-        if (plane == null){
+        if (planes == null){
             
             fsm = rs.getFlightStateMessageObject();
             listfs = fsm.getStates();
@@ -41,25 +41,20 @@ public class PlaneController {
             model.addAttribute("countrieslist", listcountry);
         }
         
-        if (plane != null){
-            
-            //String jsons = rs.getStats(flight);
-            //System.out.println(jsons);
-            
-            
-            for(FlightState f : listfs){
-                if (f.getIcao24().equals(plane)){
+        if (planes != null){
+            for (FlightState f : listfs){
+                if (f.getIcao24().equals(planes)){
+                    model.addAttribute("flightslist", listfs);
+                    model.addAttribute("countrieslist", listcountry); 
+                    
                     model.addAttribute("icao24", f.getIcao24());
                     model.addAttribute("country", f.getOrigin_contry());
                     model.addAttribute("latitude", f.getLatitude());
                     model.addAttribute("longitude", f.getLongitude());
                     model.addAttribute("velocity", f.getVelocity());
-                    model.addAttribute("verticalrate", f.getVertical_rate());
+                    model.addAttribute("verticalrate", f.getVertical_rate());              
                 }
-            }
-            
-            model.addAttribute("flightslist", listfs);
-            model.addAttribute("countrieslist", listcountry);        
+            }     
         }
         else{
             model.addAttribute("icao24", "");
