@@ -41,7 +41,7 @@ public class FlightStateMessageController {
         return flightStateService.findAll();
     }
     
-    @GetMapping(value = "byTime/{time}")
+    @GetMapping(value = "/byTime/{time}")
     public FlightStateMessage getFlightStateMessageByTime(@PathVariable("time") int time) {
         return flightStateService.findByTime(time);
     }
