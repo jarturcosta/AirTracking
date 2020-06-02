@@ -46,7 +46,7 @@ public class AirtrackingApplicationTests{
             List<FlightState> states = new ArrayList<>();
             states.add(toCheck);
             toSave = new FlightStateMessage(123456, states);
-            url = new URL("http://localhost:8005/flightstates/byTime/" + Integer.toString(123456));
+            url = new URL("http://192.168.160.103:9069/flightstates/byTime/" + Integer.toString(123456));
             con = (HttpURLConnection) url.openConnection();
 
         }
@@ -56,6 +56,8 @@ public class AirtrackingApplicationTests{
             
             
             sendPost(toSave.toString());
+            Thread.sleep(5000);
+                    
             
             Gson gson = new Gson();
             FlightStateMessage fsm = gson.fromJson(getState(123456), FlightStateMessage.class);
@@ -75,7 +77,7 @@ public class AirtrackingApplicationTests{
         
         private void sendPost(String body) throws Exception {
 
-            HttpPost post = new HttpPost("http://localhost:8005/flightstates/");
+            HttpPost post = new HttpPost("http://192.168.160.103:9069/flightstates");
 
             StringEntity entity = new StringEntity(body);
             post.setHeader("Accept", "application/json");

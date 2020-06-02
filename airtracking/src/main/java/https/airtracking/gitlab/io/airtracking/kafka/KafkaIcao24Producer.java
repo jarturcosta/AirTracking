@@ -44,7 +44,7 @@ public class KafkaIcao24Producer{
     
     public KafkaIcao24Producer(String topic, Boolean isAsync) {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "localhost:9092");
+        properties.put("bootstrap.servers", "192.168.160.103:9021");
         properties.put("client.id", CLIENT_ID);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -71,24 +71,7 @@ public class KafkaIcao24Producer{
 
     }
 
-    public static String getAllStates() throws MalformedURLException, IOException {
-        URL url = new URL("https://opensky-network.org/api/states/all");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-
-        int status = con.getResponseCode();
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder content = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        in.close();
-
-        return content.toString();
-    }
+    
     
     public void sendMessage (String icao24, int messageNo) throws InterruptedException, ExecutionException {
         

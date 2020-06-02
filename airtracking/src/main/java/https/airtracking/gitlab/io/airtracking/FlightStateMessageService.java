@@ -26,5 +26,7 @@ public interface FlightStateMessageService {
         
     void saveOrUpdateFlightStateMessage(FlightStateMessage message);
     
+    void deleteAll();
+    
     
 }

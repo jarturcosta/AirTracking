@@ -48,4 +48,9 @@ public class FlightStateMessageServiceImpl implements FlightStateMessageService 
         flightStateMessageRepository.deleteByTime(time);
     }
     
+    @Override
+    public void deleteAll() {
+        flightStateMessageRepository.deleteAll();
+    }
+    
 }

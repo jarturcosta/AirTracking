@@ -5,10 +5,17 @@
  */
 package https.airtracking.gitlab.io.airtracking;
 
+import com.google.gson.Gson;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStats;
 import https.airtracking.gitlab.io.airtracking.kafka.KafkaIcao24Producer;
 import https.airtracking.gitlab.io.airtracking.kafka.KafkaStatsConsumer;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +41,7 @@ public class FlightStateMessageController {
     private KafkaIcao24Producer producer = new KafkaIcao24Producer("STATS_REQ", Boolean.TRUE);
     private KafkaStatsConsumer consumer = new KafkaStatsConsumer();
     private int statRequestCount = 0;
+    private Gson gson = new Gson();
     
     @GetMapping(value = "/")
     public List<FlightStateMessage> getAllFlightStateMessages() {
@@ -75,6 +83,15 @@ public class FlightStateMessageController {
         return consumer.getLastStats();
         
     }
+    
+    @DeleteMapping(value = "clearFlightStates")
+    public ResponseEntity<?>  clearFlightStates() {
+        flightStateService.deleteAll();
+        return new ResponseEntity("Flight state deleted successfully", HttpStatus.OK);
+    }
+ 
+    
+    
 
     
     

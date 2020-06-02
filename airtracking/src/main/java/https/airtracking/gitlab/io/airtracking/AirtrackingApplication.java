@@ -24,5 +24,7 @@ public class AirtrackingApplication implements CommandLineRunner {
     public void run(String[] args) throws Exception {
         System.out.println("Hey");
 
+        ConsumerDaemon daemon = new ConsumerDaemon();
+        daemon.start();
     }
 }

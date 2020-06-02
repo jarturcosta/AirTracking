@@ -24,6 +24,8 @@ public interface FlightStateMessageRepository extends MongoRepository<FlightStat
     FlightStateMessage findTopByOrderByTimeDesc();
 
     void deleteByTime(int time);
+    
+    void deleteAll();
         
     
 }
