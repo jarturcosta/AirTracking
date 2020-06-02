@@ -6,17 +6,8 @@
 package https.airtracking.gitlab.io.airtracking.kafka;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -44,7 +35,7 @@ public class KafkaIcao24Producer{
     
     public KafkaIcao24Producer(String topic, Boolean isAsync) {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "192.168.160.103:9021");
+        properties.put("bootstrap.servers", "kafka:9092");
         properties.put("client.id", CLIENT_ID);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
