@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        choice choices: ['API & WebApp', 'API', 'WebApp'], description: '', name: 'APPLICATION'
+        choice choices: ['API & WebApp & Stats', 'API', 'WebApp', 'Stats'], description: '', name: 'APPLICATION'
         booleanParam defaultValue: true, description: '', name: 'BUILD'
         choice choices: ['Run Tests', 'Ignore'], description: '', name: 'TESTS'
         choice choices: ['Publish & Deploy', 'Publish', 'Deploy', 'Ignore'], description: '', name: 'ACTION'
@@ -19,11 +19,15 @@ pipeline {
             when { expression { params.BUILD ==~ /(?i)(Y|YES|T|TRUE|ON|RUN)/ } }
             steps {
                 script {
-                    if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'API') {
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'API') {
                         sh 'mvn -f airtracking clean package -DskipTests -Pprod'
                     }
+
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'Stats') {
+                        sh 'mvn -f airtrackingstatsservice clean package -DskipTests'
+                    }
                     
-                    if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'WebApp') {
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'WebApp') {
                         sh 'mvn -f airtrackingwebapp clean package -DskipTests'
                     }
                 }
@@ -34,11 +38,16 @@ pipeline {
             when { expression { params.TESTS == 'Run Tests'} }
             steps {
                 script {
-                    if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'API') {
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'API') {
+                        echo "Testing"
+                    }
+                    
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'Stats') {
                         echo "Testing"
                     }
 
-                    if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'WebApp') {
+
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'WebApp') {
                         echo "Testing"
                     }
                 }
@@ -49,11 +58,16 @@ pipeline {
             when { expression { params.ACTION == 'Publish & Deploy' || params.ACTION == 'Publish'} }
             steps {
                 script {
-                    if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'API') {
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'API') {
                         sh 'mvn -s settings.xml -f airtracking deploy -DskipTests -Pprod'
                     }
+                    
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'Stats') {
+                        sh 'mvn -s settings.xml -f airtrackingstatsservice deploy -DskipTests'
+                    }
 
-                    if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'WebApp') {
+
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'WebApp') {
                         sh 'mvn -s settings.xml -f airtrackingwebapp deploy -DskipTests'
                     }
                 }
@@ -64,13 +78,18 @@ pipeline {
             when { expression { params.ACTION == 'Publish & Deploy' || params.ACTION == 'Publish'} }
             steps {
                 script {
-                    if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'API') {
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'API') {
                         sh 'docker build -t esp52-airtracking airtracking'
                         sh 'docker tag esp52-airtracking 192.168.160.99:5000/esp52-airtracking'
                         sh 'docker push 192.168.160.99:5000/esp52-airtracking'
                     }
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'Stats') {
+                        sh 'docker build -t esp52-airtrackingstatsservice airtrackingstatsservice'
+                        sh 'docker tag esp52-airtrackingstatsservice 192.168.160.99:5000/esp52-airtrackingstatsservice'
+                        sh 'docker push 192.168.160.99:5000/esp52-airtrackingstatsservice'
+                    }
                     
-                    if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'WebApp') {
+                    if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'WebApp') {
                         sh 'docker build -t esp52-airtrackingwebapp airtrackingwebapp'
                         sh 'docker tag esp52-airtrackingwebapp 192.168.160.99:5000/esp52-airtrackingwebapp'
                         sh 'docker push 192.168.160.99:5000/esp52-airtrackingwebapp'
@@ -84,14 +103,20 @@ pipeline {
             steps {
                 script {
                     sshagent (credentials: ['airtracking-runtime']) {
-                        if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'API') {
+                        if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'API') {
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtracking$ --filter status=running | xargs -r docker stop"'
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtracking$ --filter status=exited | xargs -r docker rm"'
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker images -qa --filter label=name=airtracking | xargs -r docker rmi"'
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 docker run -d -p 9069:8005 --network="esp52" --name esp52-airtracking 192.168.160.99:5000/esp52-airtracking'
                         }
+                        if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'Stats') {
+                            sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtrackingstatsservice$ --filter status=running | xargs -r docker stop"'
+                            sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtrackingstatsservice$ --filter status=exited | xargs -r docker rm"'
+                            sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker images -qa --filter label=name=airtrackingstatsservice | xargs -r docker rmi"'
+                            sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 docker run -d --network="esp52" --name esp52-airtrackingstatsservice 192.168.160.99:5000/esp52-airtrackingstatsservice'
+                        }
 
-                        if (env.APPLICATION == 'API & WebApp' || env.APPLICATION == 'WebApp') {
+                        if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'WebApp') {
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtrackingwebapp$ --filter status=running | xargs -r docker stop"'
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker ps -qa --filter name=esp52-airtrackingwebapp$ --filter status=exited | xargs -r docker rm"'
                             sh 'ssh -o StrictHostKeyChecking=no -l esp52 192.168.160.103 "docker images -qa --filter label=name=airtrackingwebapp | xargs -r docker rmi"'
