@@ -26,7 +26,7 @@ import org.apache.kafka.common.serialization.IntegerDeserializer;
 public class KafkaFlightStateConsumer extends Thread {
     private final static String TOPIC = "STATS_REQ";
     private final static String BOOTSTRAP_SERVERS =
-            "localhost:9092";
+            "192.168.160.103:9021";
 
     public KafkaFlightStateConsumer() {
     }

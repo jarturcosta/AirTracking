@@ -40,8 +40,8 @@ public class KafkaFlightStateProducer{
 
     private String topic;
     private Boolean isAsync;
-    public static final String KAFKA_SERVER_URL = "localhost";
-    public static final int KAFKA_SERVER_PORT = 9092;
+    public static final String KAFKA_SERVER_URL = "192.168.160.103";
+    public static final int KAFKA_SERVER_PORT = 9021;
     public static final String CLIENT_ID = "SampleProducer";
     
     

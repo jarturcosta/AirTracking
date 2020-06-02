@@ -62,7 +62,7 @@
                             <li><a class="nav-link active" href="/">Home</a></li>
                             <li><a class="nav-link" href="/map">Map</a></li>
                             <li><a class="nav-link" href="/flight">Flight Statistics</a></li>
-                            <li><a class="nav-link" href="/plane">Plane Statistics</a></li>
+                            <li><a class="nav-link" href="/plane">Plane Data</a></li>
                         </ul>
                     </div>
                     <div class="search-box">
@@ -85,31 +85,57 @@
                         
                     <div style="flex: 0 0 65%">
                         
-                        <h2 style="color:#ffffff; font-weight:bold">Plane Statistics</h2>
+                        <h2 style="color:#ffffff; font-weight:bold">Plane Data</h2>
                         <div class="fakeimg" style="height:240px;">
                             <img src="img/plane.jpg" alt="plane" style="width:400px;height:200px;">
                         </div>
                         
                     </div>
+                    
+                    <div>
+                        <form action="#" th:action="@{/plane}" />
+                    
+                    <div>
+                        <h3><label for="country"  style="color:#ffffff;font-weight:bold" >Select country: </label></h3>
+                        <select id="countrySelect" class="select-air">
+                            <!--<option value="">Select Country</option>-->
+                            <option th:each="country : ${countrieslist}" th:value="${country}" th:text="${country}"></option>
+                        </select>
+                    </div>
                         
+                    <p></p>
                         
                     <div>
-                        <form action="/plane.html">
-                            <h3 style="color:#ffffff; font-weight:bold"><label for="planes">Choose a plane:</label></h3>
+                            <h3 style="color:#ffffff; font-weight:bold"><label for="planes">Select plane:</label></h3>
 
                             <select class="select-air" id="planes" name="planes">
-                                <option value="test1">plane1</option>
-                                <option value="test2">plane2</option>
-                            </select>
-                            <p></p>
-                            <h5><input class="btn-air" type="submit" value="Submit"></h5>
-                        </form>
+                                <!--<option value="test1">plane1</option>
+                                <option value="test2">plane2</option>-->
+                            </select>                                              
                     </div>
-                </div>             
+                        <p></p>
+                            <h5><input class="btn-air" type="submit" value="Submit"></h5>
+                    </form>
+                    </div>
+                    </div>             
             </div>
         </div>
         <!-- end section -->
         
+        <br>
+            
+        <center>
+            <div class="main">
+                <h3>Name:</h3> <p th:text="${icao24}" />
+                <h3>Country:</h3> <p th:text="${country}" />
+                <h3>Latitude:</h3> <p th:text="${latitude}" />
+                <h3>Longitude:</h3> <p th:text="${longitude}" />
+                <h3>Velocity:</h3> <p th:text="${velocity}" />
+                <h3>Vertical Rate:</h3> <p th:text="${verticalrate}" />
+            </div>
+        </center>
+            
+            <br>
 
         <div class="footer_bottom" style="position: fixed; left: 0; bottom: 0; width: 100%;">            
             <div class="container">
@@ -136,5 +162,45 @@
         <script src="js/custom.js"></script>   
 
     </body>
+    
+    <script>
+        /*var url = 'http://192.168.160.103:9069/flightstates/last';
+        $.getJSON(url, function(data) {
+            //console.log(data);
+            var planes = data.states;
+            console.log(planes)
+        });
+        console.log("ola")*/
+    </script>
+    
+    <script th:inline="javascript">
+        
+        let dropdown = document.getElementById("planes");
+        
+        var flights =[[${flightslist}]];
+        
+        $("#countrySelect").on('change', function() {
+            var f = [];
+            var country = $("#countrySelect").val();
+            
+            flights.forEach(function(flight) {
+                if (flight.origin_contry === country){
+                    f.push(flight.icao24);
+                }
+            });
+            
+            console.log(country);
+            console.log(f);
+            
+            dropdown.options.length = 0;
+            for (let i = 0; i < f.length; i++) {
+                option = document.createElement('option');
+                option.text = f[i];
+                option.value = f[i];
+                dropdown.add(option);
+            } 
+        });
+    </script>
+    
 </html>
 
