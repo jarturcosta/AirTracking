@@ -18,6 +18,7 @@ import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
@@ -30,12 +31,14 @@ public class KafkaIcao24Producer{
     private Boolean isAsync;
     public static final String CLIENT_ID = "SampleProducer";
     public static int messageNo = 0;
+    //@Value("${kafka.server}")
+    //private String BOOTSTRAP_SERVERS;
 
     
     
     public KafkaIcao24Producer(String topic, Boolean isAsync) {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "kafka:9092");
+        properties.put("bootstrap.servers", "192.168.160.103:9092");
         properties.put("client.id", CLIENT_ID);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
