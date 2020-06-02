@@ -66,7 +66,6 @@ pipeline {
                         sh 'mvn -s settings.xml -f airtrackingstatsservice deploy -DskipTests'
                     }
 
-
                     if (env.APPLICATION == 'API & WebApp & Stats' || env.APPLICATION == 'WebApp') {
                         sh 'mvn -s settings.xml -f airtrackingwebapp deploy -DskipTests'
                     }
