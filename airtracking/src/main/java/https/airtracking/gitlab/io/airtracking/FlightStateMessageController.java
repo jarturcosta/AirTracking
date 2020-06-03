@@ -6,6 +6,10 @@
 package https.airtracking.gitlab.io.airtracking;
 
 import com.google.gson.Gson;
+import com.jayway.jsonpath.Criteria;
+import com.mongodb.client.MongoClients;
+import static com.mongodb.client.model.Filters.type;
+import static com.mongodb.client.model.Filters.type;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStats;
 import https.airtracking.gitlab.io.airtracking.kafka.KafkaIcao24Producer;
@@ -24,6 +28,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.repository.Query;
 
 
 /**
@@ -40,7 +47,7 @@ public class FlightStateMessageController {
     
     private KafkaIcao24Producer producer = new KafkaIcao24Producer("STATS_REQ", Boolean.TRUE);
     private KafkaStatsConsumer consumer = new KafkaStatsConsumer();
-    private int statRequestCount = 0;
+    private int statRequestCount = 0, insertRequestCount = 0 ;
     private Gson gson = new Gson();
     
     @GetMapping(value = "/")
@@ -58,6 +65,11 @@ public class FlightStateMessageController {
     @PostMapping(value = "/")
     public ResponseEntity<?> saveOrUpdateFlightStateMessage(@RequestBody FlightStateMessage flightStateMessage) {
         flightStateService.saveOrUpdateFlightStateMessage(flightStateMessage);
+        insertRequestCount += 1;
+        if (insertRequestCount >= 720) {
+            clearFlightStates();
+         }
+        
         return new ResponseEntity("Flight state added successfully", HttpStatus.OK);
     }
     
@@ -87,7 +99,7 @@ public class FlightStateMessageController {
     @DeleteMapping(value = "clearFlightStates")
     public ResponseEntity<?>  clearFlightStates() {
         flightStateService.deleteAll();
-        return new ResponseEntity("Flight state deleted successfully", HttpStatus.OK);
+        return new ResponseEntity("All flight states deleted successfully", HttpStatus.OK);
     }
  
     

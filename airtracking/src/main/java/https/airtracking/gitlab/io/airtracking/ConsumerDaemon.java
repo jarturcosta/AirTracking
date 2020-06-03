@@ -35,11 +35,11 @@ public class ConsumerDaemon extends Thread {
                 sendPost(message);
                 System.out.println("Sent : " + message);
                 
-                Thread.sleep(15000);
+                Thread.sleep(120000);
             } catch (IOException ex) {
-                Logger.getLogger(ConsumerDaemon.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(ConsumerDaemon.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(ConsumerDaemon.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(ConsumerDaemon.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -67,7 +67,9 @@ public class ConsumerDaemon extends Thread {
     
     private void sendPost(String body) throws Exception {
 
-        HttpPost post = new HttpPost("http://192.168.160.103:9069/flightstates/");
+        //HttpPost post = new HttpPost("http://192.168.160.103:9069/flightstates/");
+        HttpPost post = new HttpPost("http://localhost:8005/flightstates/");
+
 
         StringEntity entity = new StringEntity(body);
         post.setHeader("Accept", "application/json");

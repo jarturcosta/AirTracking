@@ -33,7 +33,7 @@ public class FlightStateDeserializer {
 
             for (Object object : currentState) {
                 if (object == null) {
-                    System.out.println(">>"+currentState.indexOf(object)+":"+currentState);
+                    //System.out.println(">>"+currentState.indexOf(object)+":"+currentState);
 
                     currentState.set(currentState.indexOf(object), "null");
                 }
