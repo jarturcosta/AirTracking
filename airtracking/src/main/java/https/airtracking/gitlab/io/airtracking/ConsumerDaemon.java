@@ -67,8 +67,8 @@ public class ConsumerDaemon extends Thread {
     
     private void sendPost(String body) throws Exception {
 
-        //HttpPost post = new HttpPost("http://192.168.160.103:9069/flightstates/");
-        HttpPost post = new HttpPost("http://localhost:8005/flightstates/");
+        HttpPost post = new HttpPost("http://192.168.160.103:9069/flightstates/");
+        //HttpPost post = new HttpPost("http://localhost:8005/flightstates/");
 
 
         StringEntity entity = new StringEntity(body);
