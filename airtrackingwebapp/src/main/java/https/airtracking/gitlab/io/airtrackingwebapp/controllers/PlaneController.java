@@ -42,6 +42,7 @@ public class PlaneController {
         }
         
         if (planes != null){
+            
             for (FlightState f : listfs){
                 if (f.getIcao24().equals(planes)){
                     model.addAttribute("flightslist", listfs);
@@ -57,12 +58,12 @@ public class PlaneController {
             }     
         }
         else{
-            model.addAttribute("icao24", "");
-            model.addAttribute("country", "");
-            model.addAttribute("latitude", "");
-            model.addAttribute("longitude", "");
-            model.addAttribute("velocity", "");
-            model.addAttribute("verticalrate", "");
+            model.addAttribute("icao24", " ");
+            model.addAttribute("country", " ");
+            model.addAttribute("latitude", " ");
+            model.addAttribute("longitude", " ");
+            model.addAttribute("velocity", " ");
+            model.addAttribute("verticalrate", " ");
         }
         
         return "plane";
