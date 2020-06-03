@@ -85,7 +85,7 @@ public class StatsCalculator {
                     String jsonStr = JSON.serialize(doc);
                     
                     MongoFSM fsm = gson.fromJson(jsonStr, MongoFSM.class);
-                    System.out.println("FSM:" + fsm.toString());
+                    //System.out.println("FSM:" + fsm.toString());
                     for (FlightState flightState : fsm.getStates()) {
                         if (flightState.getIcao24().equals(icao24)) {
                             System.out.println("HAAAAAAAAAAAAAAAAAAAAAAAAAAA");
@@ -99,7 +99,7 @@ public class StatsCalculator {
                         }
                     }
                     
-                    System.out.println("Speed: " + speedSum + " / " + cnt);
+                    //System.out.println("Speed: " + speedSum + " / " + cnt);
                     result.avg_speed = speedSum/(float) cnt;
                     result.avg_vertical_rate = vrateSum/(float) cnt;
 
