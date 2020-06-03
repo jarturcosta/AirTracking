@@ -31,6 +31,9 @@
         <link rel="stylesheet" href="css/custom.css" />
         <link rel="stylesheet" href="css/buttonstyles.css" />
         
+        <!-- PAGE -->
+        <link rel="stylesheet" href="css/webpageflights.css"/>
+        
     </head>
     
     <body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98">
@@ -74,75 +77,45 @@
         <!-- End header -->
         
         <!-- section -->
-        <div class="section layout_padding theme_bg">
-            <div class="container">
-                <div class="row">
-                    
-                        
-                    <div style="flex: 0 0 65%">
-                        
-                        <h2 style="color:#ffffff; font-weight:bold">Flight Statistics</h2>
-                        <div class="fakeimg" style="height:240px;">
-                            <img src="img/flight.png" alt="flight" style="width:400px;height:200px;">
-                        </div>
-                        
+        <div class="query">
+                
+                <div class="row">                    
+                     
+                    <!-- LEFT SIDE DIV -->
+                    <div class="col-md-4 query-left">
+                        <h2>Flight Statistics</h2>
+                        <img src="img/flight.png" alt="flight">
                     </div>
-                        
-                        
-                    <div>
-                        <form action="#" th:action="@{/flight}" />
-                            
-                        <!--
-                            <div>
-                                <h3 style="color:#ffffff; font-weight:bold"><label for="flights">Dates:</label></h3>
-                                <label for="startdate"  style="color:#ffffff;">Start date:</label>
-                                <input class="select-air" type="date" id="start" name="start">    
-                                <p></p>
-                                <label for="enddate" style="color:#ffffff;">End date:</label>
-                                <input class="select-air" type="date" id="end" name="end">
-                            </div>
-                        -->
-                            
-                            <div>
-                                <h3><label for="country"  style="color:#ffffff;font-weight:bold" >Select country: </label></h3>
+                    
+                    <!-- RIGHT SIDE DIV -->
+                    <div class="col-md-8 query-right">
+                                
+                        <div class="query-right-col-left">
+                            <form action="#" th:action="@{/flight}" />
+                                <h3><label for="country">Select country: </label></h3>
                                 <select id="countrySelect" class="select-air">
-                                    <!--<option value="">Select Country</option>-->
                                     <option th:each="country : ${countrieslist}" th:value="${country}" th:text="${country}"></option>
                                 </select>
-                            </div>
+                                <p></p>
+                                <h3><label for="flights">Select flight:</label></h3>
+                                <select class="select-air" id="flight" name="flight"></select>
+                                <p></p>
+                                <h5><input class="btn-air" type="submit" value="Submit"></h5>
+                            </form>
+                        </div>
                         
-                            <p></p>
-                            
-                            <div>
-                                <h3 style="color:#ffffff; font-weight:bold"><label for="flights">Select flight:</label></h3>
-                                <select class="select-air" id="flight" name="flight">
-                                        <!--<option value="a09281">a09281</option>
-                                        <option value="ade18c">ade18c</option>-->
-                                </select>
-                            </div>
-                            
-                            <p></p>
-                            
-                            <h5><input class="btn-air" type="submit" value="Submit"></h5>
-                            
-                        </form>
-                    </div>
-                </div>             
+                        <div class="query-right-col-right">
+                            <span th:if="${icao24 != ' '}"><span class="result-header">Name:</span> <span th:text="${icao24}"></span></span><p></p>
+                            <span th:if="${max_speed != ' '}"><span class="result-header">Max speed:</span> <span th:text="${max_speed}"></span></span><p></p>
+                            <span th:if="${avg_speed != ' '}"><span class="result-header">Average speed:</span> <span th:text="${avg_speed}"></span></span><p></p>
+                            <span th:if="${avg_vertical_rate != ' '}"><span class="result-header">Average vertical rate:</span> <span th:text="${avg_vertical_rate}"></span></span><p></p>
+                        </div>
+                        
+                    </div>           
             </div>
         </div>
+        
         <!-- end section -->
-        
-        <br>
-            
-        <center>
-            <div class="main">
-                <h3>Name:</h3> <p th:text="${icao24}" />
-                <h3>Max speed:</h3> <p th:text="${max_speed}" />
-                <h3>Average speed:</h3> <p th:text="${avg_speed}" />
-                <h3>Average vertical rate:</h3> <p th:text="${avg_vertical_rate}" />
-            </div>
-        </center>
-        
         
 
         <div class="footer_bottom" style="position: fixed; left: 0; bottom: 0; width: 100%;">
@@ -169,25 +142,14 @@
         <script src="js/images-loded.min.js"></script>
         <script src="js/custom.js"></script>   
 
-    </body> 
-    
-    <script>
-        /*var url = 'http://192.168.160.103:9069/flightstates/last';
-        $.getJSON(url, function(data) {
-            //console.log(data);
-            var planes = data.states;
-            console.log(planes)
-        });
-        console.log("ola")*/
-    </script>
+    </body>
     
     <script th:inline="javascript">
         
         let dropdown = document.getElementById("flight");
-        
         var flights =[[${flightslist}]];
         
-        $("#countrySelect").on('change', function() {
+        function changeflight(){
             var f = [];
             var country = $("#countrySelect").val();
             
@@ -207,7 +169,10 @@
                 option.value = f[i];
                 dropdown.add(option);
             } 
-        });
+        }
+        
+        window.onload = changeflight;
+        document.getElementById("countrySelect").onchange = changeflight;
     </script>
     
 </html>

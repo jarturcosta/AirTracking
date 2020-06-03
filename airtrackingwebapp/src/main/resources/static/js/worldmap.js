@@ -90,6 +90,7 @@
             
             // remove previous planes
             svg.selectAll("image")
+                    .transition().duration(500)
                     .remove();  
             
             // place planes
@@ -108,7 +109,7 @@
                   ]) + ")";
                 })
                 .append("title")
-                    .text(d => "" + d.icao24 + " - long:" + d.longitude + " / lat:" + d.latitude);
+                    .text(d => "Flight: " + d.icao24 + "\nLongitude: " + d.longitude + "\nLatitude: " + d.latitude + "\nOrigin country: " + d.origin_contry + "\nVelocity: " + d.velocity);
         });                     
     }, 10000);  
         

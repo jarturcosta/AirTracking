@@ -1,19 +1,18 @@
 package https.airtracking.gitlab.io.airtrackingwebapp.controllers;
 
+import com.google.gson.Gson;
 import https.airtracking.gitlab.io.airtrackingwebapp.services.FlightState;
 import https.airtracking.gitlab.io.airtrackingwebapp.services.FlightStateMessage;
 import https.airtracking.gitlab.io.airtrackingwebapp.services.RestService;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
+import org.json.JSONObject;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -26,7 +25,6 @@ public class FlightController {
     
     @GetMapping("/flight")
     public String flight(Model model, @RequestParam(required = false) String flight, @RequestParam(required = false) String country) throws ParseException {
-        
         
         if (flight == null){
             
@@ -47,24 +45,26 @@ public class FlightController {
         
         if (flight != null){
             
-            //String jsons = rs.getStats(flight);
-            //System.out.println(jsons);
+            /* Entra aqui duas vezes e buga os resultados */
+            System.out.println("asdda");
             
-            /*
-            for (FlightState f : listfs){
-                if (f.getIcao24() == flight){
-                    //...
-                }
-            }
-            */
+            String stats = rs.getStats(flight);
+            System.out.println(stats);
+            
+            String max_speed = stats.split(",")[1].split(":")[1];
+            String avg_speed = stats.split(",")[2].split(":")[1];
+            String avg_vertical = stats.split(",")[3].split(":")[1];
+            avg_vertical = avg_vertical.substring(0, avg_vertical.length() - 1);
             
             model.addAttribute("flightslist", listfs);
             model.addAttribute("countrieslist", listcountry);
             
             model.addAttribute("icao24", flight);
-            model.addAttribute("max_speed", "TODO1");
-            model.addAttribute("avg_speed", "TODO2");
-            model.addAttribute("avg_vertical_rate", "TODO4");
+            model.addAttribute("max_speed", max_speed);
+            model.addAttribute("avg_speed", avg_speed);
+            model.addAttribute("avg_vertical_rate", avg_vertical);
+            
+            flight = null;
         }
         else{
             model.addAttribute("icao24", " ");
@@ -75,9 +75,4 @@ public class FlightController {
         
         return "flight";
     }
-
-    /*@GetMapping("/flightdata")
-	public String flightData(Model model) {
-		return "flightData";
-    }*/
 }

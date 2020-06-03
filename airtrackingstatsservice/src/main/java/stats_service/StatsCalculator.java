@@ -99,7 +99,7 @@ public class StatsCalculator {
                         }
                     }
                     
-                    System.out.println("Speed: " + speedSum + " / " + cnt);
+                    //System.out.println("Speed: " + speedSum + " / " + cnt);
                     result.avg_speed = speedSum/(float) cnt;
                     result.avg_vertical_rate = vrateSum/(float) cnt;
 
