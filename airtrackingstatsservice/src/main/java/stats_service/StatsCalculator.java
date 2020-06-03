@@ -61,7 +61,7 @@ public class StatsCalculator {
         
         System.out.println("Here 1");
 
-        MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+        MongoClient mongoClient = new MongoClient( "192.168.160.103" , 27017 );
         System.out.println("Here 2");
         MongoDatabase db = mongoClient.getDatabase("test" );
         MongoCollection<org.bson.Document> collection = db.getCollection("flight_state_messages");

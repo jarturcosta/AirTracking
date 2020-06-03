@@ -97,8 +97,8 @@ public class KafkaFlightStateConsumer extends Thread {
                     consumer.poll(1000);
             if (consumerRecords.count()==0) {
                 noRecordsCount++;
-                if (noRecordsCount > giveUp) break;
-                else continue;
+                //if (noRecordsCount > giveUp) break;
+                //else continue;
             }
             consumerRecords.forEach(record -> {
                 System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
@@ -111,8 +111,8 @@ public class KafkaFlightStateConsumer extends Thread {
             
             consumer.commitAsync();
         }
-        consumer.close();
-        System.out.println("DONE");
+        //consumer.close();
+        //System.out.println("DONE");
     }
     
     
