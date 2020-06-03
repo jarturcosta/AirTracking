@@ -88,7 +88,6 @@ public class StatsCalculator {
                     //System.out.println("FSM:" + fsm.toString());
                     for (FlightState flightState : fsm.getStates()) {
                         if (flightState.getIcao24().equals(icao24)) {
-                            System.out.println("HAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                             float speed = Float.parseFloat(flightState.getVelocity());
                             if (speed > result.max_speed) {
                                 result.max_speed = speed;
