@@ -1,0 +1,9 @@
+models/InputMessage.class
+stats_service/KafkaFlightStateProducer$DemoCallBack.class
+models/FlightStateMessage.class
+stats_service/KafkaFlightStateConsumer.class
+models/FlightStats.class
+stats_service/KafkaFlightStateProducer.class
+models/FlightState.class
+stats_service/StatsCalculator.class
+stats_service/Main.class

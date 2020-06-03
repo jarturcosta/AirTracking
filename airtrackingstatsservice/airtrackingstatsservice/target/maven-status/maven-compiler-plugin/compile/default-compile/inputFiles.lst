@@ -1,0 +1,8 @@
+/home/jarturcosta/Documents/Mestrado/ES/airtracking.gitlab.io/airtrackingstatsservice/airtrackingstatsservice/src/main/java/stats_service/StatsCalculator.java
+/home/jarturcosta/Documents/Mestrado/ES/airtracking.gitlab.io/airtrackingstatsservice/airtrackingstatsservice/src/main/java/models/FlightStateMessage.java
+/home/jarturcosta/Documents/Mestrado/ES/airtracking.gitlab.io/airtrackingstatsservice/airtrackingstatsservice/src/main/java/stats_service/KafkaFlightStateProducer.java
+/home/jarturcosta/Documents/Mestrado/ES/airtracking.gitlab.io/airtrackingstatsservice/airtrackingstatsservice/src/main/java/models/InputMessage.java
+/home/jarturcosta/Documents/Mestrado/ES/airtracking.gitlab.io/airtrackingstatsservice/airtrackingstatsservice/src/main/java/stats_service/Main.java
+/home/jarturcosta/Documents/Mestrado/ES/airtracking.gitlab.io/airtrackingstatsservice/airtrackingstatsservice/src/main/java/models/FlightState.java
+/home/jarturcosta/Documents/Mestrado/ES/airtracking.gitlab.io/airtrackingstatsservice/airtrackingstatsservice/src/main/java/stats_service/KafkaFlightStateConsumer.java
+/home/jarturcosta/Documents/Mestrado/ES/airtracking.gitlab.io/airtrackingstatsservice/airtrackingstatsservice/src/main/java/models/FlightStats.java

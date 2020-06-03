@@ -91,6 +91,7 @@ public class FlightStateMessageController {
         statRequestCount++;
         System.out.println(statRequestCount);
         consumer.run();
+        Thread.sleep(2000);
 
         return consumer.getLastStats();
         

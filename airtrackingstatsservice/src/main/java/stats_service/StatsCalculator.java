@@ -26,11 +26,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import javax.management.Query;
 import models.FlightState;
 import models.FlightStateMessage;
 import models.FlightStats;
 import models.MongoFSM;
+import org.bson.BsonDocument;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -59,19 +62,17 @@ public class StatsCalculator {
         
         List<Float> v_rates = new ArrayList<>();
         
-        System.out.println("Here 1");
 
-        MongoClient mongoClient = new MongoClient( "192.168.160.103" , 27017 );
-        System.out.println("Here 2");
+        MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+        //MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
         MongoDatabase db = mongoClient.getDatabase("test" );
         MongoCollection<org.bson.Document> collection = db.getCollection("flight_state_messages");
         
-        System.out.println("Here 3");
         Gson gson = new Gson();
         
-        try (MongoCursor<org.bson.Document> cur = collection.find().iterator()) {
+        try (MongoCursor<org.bson.Document> cur = collection.find().sort(new BasicDBObject("_id",-1)).limit(5).iterator()) {
 
-                while (cur.hasNext()) {
+                while (cur.hasNext() && cnt < 5) {
 
                     Document doc = cur.next();
                     /*
@@ -85,10 +86,9 @@ public class StatsCalculator {
                     String jsonStr = JSON.serialize(doc);
                     
                     MongoFSM fsm = gson.fromJson(jsonStr, MongoFSM.class);
-                    System.out.println("FSM:" + fsm.toString());
+                    //System.out.println("FSM:" + fsm.toString());
                     for (FlightState flightState : fsm.getStates()) {
                         if (flightState.getIcao24().equals(icao24)) {
-                            System.out.println("HAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                             float speed = Float.parseFloat(flightState.getVelocity());
                             if (speed > result.max_speed) {
                                 result.max_speed = speed;
@@ -108,7 +108,7 @@ public class StatsCalculator {
                 }
             }
         
-        
+        System.out.println("Stats: " + result.toString());
         return result;
     }
     
