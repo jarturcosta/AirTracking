@@ -33,7 +33,7 @@ public class ConsumerDaemon extends Thread {
             try {
                 String message = FlightStateDeserializer.deserialize(getAllStates()).toString();
                 sendPost(message);
-                System.out.println("Sent : " + message);
+                //System.out.println("Sent : " + message);
                 
                 Thread.sleep(120000);
             } catch (IOException ex) {
