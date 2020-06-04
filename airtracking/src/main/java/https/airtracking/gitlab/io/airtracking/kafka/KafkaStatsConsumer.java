@@ -73,14 +73,14 @@ public class KafkaStatsConsumer extends Thread{
                     record.key(), record.value(),
                     record.partition(), record.offset());
                 if (record.value()!=null) {
-                    System.out.println(record.value());
+                    //System.out.println(record.value());
                     lastStats = gson.fromJson(record.value(), FlightStats.class);
                     
 
                 }
             });
             consumer.commitAsync();
-            System.out.println("LAST -> " + lastStats);
+            //System.out.println("LAST -> " + lastStats);
             break;
         }
         consumer.close();
