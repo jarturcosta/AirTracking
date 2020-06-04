@@ -68,17 +68,12 @@
                             <li><a class="nav-link" href="/plane">Plane Data</a></li>
                         </ul>
                     </div>
-                    <div class="search-box">
-                        <input type="text" class="search-txt" placeholder="Search">
-                        <a class="search-btn">
-                            <img src="img/search_icon.png" alt="#" />
-                        </a>
-                    </div>
                 </div>
             </nav>
         </header>
         <!-- End header -->
         
+        <div class="query"></div>
         <!-- section -->
         <div class="query">
                 
@@ -115,12 +110,14 @@
                 <div class="col-md-4 query-right">
                     
                     <h2>Plane Data</h2>
-                    <img src="img/plane.jpg" alt="plane">
+                    <img src="img/plane-icon-2.png" alt="plane">
 
                 </div>           
             </div>
         </div>        
         <!-- end section -->
+        
+        <div class="query"><br><br><br><br></div>
 
 
         <div class="footer_bottom" style="position: fixed; left: 0; bottom: 0; width: 100%;">            
@@ -174,8 +171,8 @@
                 }
             });
             
-            console.log(country);
-            console.log(f);
+            //console.log(country);
+            //console.log(f);
             
             dropdown.options.length = 0;
             for (let i = 0; i < f.length; i++) {
