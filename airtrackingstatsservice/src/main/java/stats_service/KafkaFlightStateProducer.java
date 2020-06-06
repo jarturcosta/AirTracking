@@ -60,7 +60,6 @@ public class KafkaFlightStateProducer{
     public void sendStats(String icao24) {
         String messageStr = "empty";
         long startTime = System.currentTimeMillis();
-        if (isAsync) { // Send asynchronously
             FlightStats f = new StatsCalculator().getStatsByFlight(icao24);
 
 
@@ -73,32 +72,7 @@ public class KafkaFlightStateProducer{
             } catch (ExecutionException ex) {
                 Logger.getLogger(KafkaFlightStateProducer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else { // Send synchronously
-            try {
 
-                //FlightStateMessage fsm = FlightStateDeserializer.deserialize(messageStr);
-                //System.out.println("Sent message: (" + messageNo + ", " + fsm.toString2() + ")");
-                FlightStats f = new StatsCalculator().getStatsByFlight(icao24);
-
-                producer.send(new ProducerRecord(topic,
-                        f.toString())).get();
-
-                try {
-                    //sendPost(fsm.toString());
-                } catch (Exception e) {
-                    System.out.println("ERROR: " + e.toString());
-                    //System.out.println("FSM: " + fsm.toString2());
-
-                }
-
-
-                //System.out.println("Saved in BD! Time:" + fsm.getTime());
-
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-                // handle the exception
-            }
-        }
 
     }
 

@@ -66,8 +66,10 @@ public class FlightStateMessageController {
     public ResponseEntity<?> saveOrUpdateFlightStateMessage(@RequestBody FlightStateMessage flightStateMessage) {
         flightStateService.saveOrUpdateFlightStateMessage(flightStateMessage);
         insertRequestCount += 1;
-        if (insertRequestCount >= 720) {
+        if (insertRequestCount >= 200) {
             clearFlightStates();
+            insertRequestCount = 0;
+       
          }
         
         return new ResponseEntity("Flight state added successfully", HttpStatus.OK);
@@ -89,9 +91,9 @@ public class FlightStateMessageController {
 
         producer.sendMessage(icao24,statRequestCount);
         statRequestCount++;
+
         System.out.println(statRequestCount);
         consumer.run();
-        Thread.sleep(2000);
 
         return consumer.getLastStats();
         
@@ -103,7 +105,6 @@ public class FlightStateMessageController {
         return new ResponseEntity("All flight states deleted successfully", HttpStatus.OK);
     }
  
-    
     
 
     

@@ -60,6 +60,7 @@ public class KafkaStatsConsumer extends Thread{
         while (true) {
             final ConsumerRecords<Long, String> consumerRecords
                     = consumer.poll(1000);
+            
             if (consumerRecords.count() == 0) {
                 noRecordsCount++;
                 if (noRecordsCount > giveUp) {
@@ -68,6 +69,7 @@ public class KafkaStatsConsumer extends Thread{
                     continue;
                 }
             }
+
             consumerRecords.forEach(record -> {
                 System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
                     record.key(), record.value(),
@@ -75,12 +77,13 @@ public class KafkaStatsConsumer extends Thread{
                 if (record.value()!=null) {
                     System.out.println(record.value());
                     lastStats = gson.fromJson(record.value(), FlightStats.class);
-                    
+
 
                 }
             });
             consumer.commitAsync();
-            System.out.println("LAST -> " + lastStats);
+
+            //System.out.println("LAST -> " + lastStats.toString());
             break;
         }
         consumer.close();

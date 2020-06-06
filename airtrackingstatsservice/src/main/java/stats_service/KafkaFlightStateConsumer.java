@@ -25,8 +25,8 @@ import org.apache.kafka.common.serialization.IntegerDeserializer;
  */
 public class KafkaFlightStateConsumer extends Thread {
     private final static String TOPIC = "STATS_REQ";
-    private final static String BOOTSTRAP_SERVERS =
-            "192.168.160.103:9092";
+    private final static String BOOTSTRAP_SERVERS = "192.168.160.103:9092";
+    //private final static String BOOTSTRAP_SERVERS = "localhost:9092";
 
     public KafkaFlightStateConsumer() {
     }
@@ -97,16 +97,17 @@ public class KafkaFlightStateConsumer extends Thread {
                     consumer.poll(1000);
             if (consumerRecords.count()==0) {
                 noRecordsCount++;
-                //if (noRecordsCount > giveUp) break;
-                //else continue;
+                if (noRecordsCount > giveUp) break;
+                else continue;
             }
             consumerRecords.forEach(record -> {
                 producer.sendStats(record.value());
 
+
             });
-            
-            
             consumer.commitAsync();
+
+            
         }
         //consumer.close();
         //System.out.println("DONE");

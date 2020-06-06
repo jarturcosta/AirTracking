@@ -60,7 +60,6 @@ public class StatsCalculator {
         
         int cnt = 0;
         
-        List<Float> v_rates = new ArrayList<>();
         
 
         MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
@@ -70,23 +69,16 @@ public class StatsCalculator {
         
         Gson gson = new Gson();
         
-        try (MongoCursor<org.bson.Document> cur = collection.find().sort(new BasicDBObject("_id",-1)).limit(5).iterator()) {
+        try (MongoCursor<org.bson.Document> cur = collection.find().skip((int) collection.countDocuments() - 10).iterator()) {
 
-                while (cur.hasNext() && cnt < 5) {
+                while (cur.hasNext()) {
 
                     Document doc = cur.next();
-                    /*
-                    ArrayList<Object> fsm = new ArrayList<>(doc.values());
-                    for(Object f : fsm) {
-                        //FlightStateMessage flight = gson.fromJson(f, FlightStateMessage.class);
-                        System.out.println(f.);
 
-                    }*/
                     
                     String jsonStr = JSON.serialize(doc);
                     
                     MongoFSM fsm = gson.fromJson(jsonStr, MongoFSM.class);
-                    //System.out.println("FSM:" + fsm.toString());
                     for (FlightState flightState : fsm.getStates()) {
                         if (flightState.getIcao24().equals(icao24)) {
                             float speed = Float.parseFloat(flightState.getVelocity());
@@ -94,17 +86,18 @@ public class StatsCalculator {
                                 result.max_speed = speed;
                             }
                             speedSum += speed;
-                            vrateSum += (Float.parseFloat(flightState.getVertical_rate()));
+                            if (flightState.getVertical_rate().equals("null")) {
+                                vrateSum += (Float.parseFloat(flightState.getVertical_rate()));
+
+                            }
                             cnt++;
                         }
                     }
                     
-                    //System.out.println("Speed: " + speedSum + " / " + cnt);
                     result.avg_speed = speedSum/(float) cnt;
                     result.avg_vertical_rate = vrateSum/(float) cnt;
 
 
-                    //System.out.printf("%s: %s%n", fsm.get(1), fsm.get(2));
                 }
             }
         

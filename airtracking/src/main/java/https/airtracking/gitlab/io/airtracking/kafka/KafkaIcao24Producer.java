@@ -39,6 +39,8 @@ public class KafkaIcao24Producer{
     public KafkaIcao24Producer(String topic, Boolean isAsync) {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "192.168.160.103:9092");
+        //properties.put("bootstrap.servers", "localhost:9092");
+
         properties.put("client.id", CLIENT_ID);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -47,23 +49,6 @@ public class KafkaIcao24Producer{
         this.isAsync = isAsync;
     }
     
-    
-    private void sendPost(String body) throws Exception {
-
-        HttpPost post = new HttpPost("http://192.168.160.103:9069/flightstates/");
-
-        StringEntity entity = new StringEntity(body);
-        post.setHeader("Accept", "application/json");
-        post.setHeader("Content-type", "application/json");
-        post.setEntity(entity);
-
-        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                CloseableHttpResponse response = httpClient.execute(post)) {
-
-            System.out.println(EntityUtils.toString(response.getEntity()));
-        }
-
-    }
 
     
     
@@ -76,7 +61,7 @@ public class KafkaIcao24Producer{
             producer.send(new ProducerRecord(topic,icao24)).get();
         } else { // Send synchronously
             try {
-                producer.send(new ProducerRecord(topic,messageNo,
+                producer.send(new ProducerRecord(topic,
                         icao24)).get();
 
                 
