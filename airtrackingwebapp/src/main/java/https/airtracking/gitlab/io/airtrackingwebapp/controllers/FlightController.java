@@ -24,7 +24,7 @@ public class FlightController {
     private List<String> listcountry = new ArrayList<>();
     
     @GetMapping("/flight")
-    public String flight(Model model, @RequestParam(required = false) String flight, @RequestParam(required = false) String country) throws ParseException {
+    public String flight(Model model, @RequestParam(required = false) String flight) throws ParseException {
         
         if (flight == null){
             
@@ -46,7 +46,7 @@ public class FlightController {
         if (flight != null){
             
             /* Entra aqui duas vezes e buga os resultados */
-            System.out.println("asdda");
+            System.out.println("flight");
             
             String stats = rs.getStats(flight);
             System.out.println(stats);

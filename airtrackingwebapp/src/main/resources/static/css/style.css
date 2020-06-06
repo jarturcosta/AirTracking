@@ -305,7 +305,7 @@ LOADER
      animation-fill-mode: both;
      -webkit-animation-name: fadeInDown;
      animation-name: fadeInDown;
-     background: #fff;
+     background: #05223d;
      z-index: 20;
 }
  .navbar-toggler {

@@ -86,7 +86,7 @@
         $.getJSON(url, function(data) {
             //console.log(data);
             var planes = data.states;
-            console.log(planes)
+            //console.log(planes)
             
             // remove previous planes
             svg.selectAll("image")
@@ -109,7 +109,7 @@
                   ]) + ")";
                 })
                 .append("title")
-                    .text(d => "Flight: " + d.icao24 + "\nLongitude: " + d.longitude + "\nLatitude: " + d.latitude + "\nOrigin country: " + d.origin_contry + "\nVelocity: " + d.velocity);
+                    .text(d => "Flight: " + d.icao24 + "\nLongitude: " + d.longitude + "\nLatitude: " + d.latitude + "\nOrigin Country: " + d.origin_contry + "\nVelocity: " + d.velocity);
         });                     
     }, 10000);  
         

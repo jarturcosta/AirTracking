@@ -20,9 +20,10 @@ public class PlaneController {
     private FlightStateMessage fsm = null;
     private List<FlightState> listfs = new ArrayList<>();
     private List<String> listcountry = new ArrayList<>();
+    private int gettimes = 0;
     
     @GetMapping("/plane")
-    public String plane(Model model, @RequestParam(required = false) String planes, @RequestParam(required = false) String country) throws ParseException {
+    public String plane(Model model, @RequestParam(required = false) String planes) throws ParseException {
         
         if (planes == null){
             
@@ -43,11 +44,13 @@ public class PlaneController {
         
         if (planes != null){
             
+            System.out.println("plane");
+            
             for (FlightState f : listfs){
                 if (f.getIcao24().equals(planes)){
                     model.addAttribute("flightslist", listfs);
                     model.addAttribute("countrieslist", listcountry); 
-                    
+
                     model.addAttribute("icao24", f.getIcao24());
                     model.addAttribute("country", f.getOrigin_contry());
                     model.addAttribute("latitude", f.getLatitude());
@@ -55,7 +58,7 @@ public class PlaneController {
                     model.addAttribute("velocity", f.getVelocity());
                     model.addAttribute("verticalrate", f.getVertical_rate());              
                 }
-            }     
+            }    
         }
         else{
             model.addAttribute("icao24", " ");

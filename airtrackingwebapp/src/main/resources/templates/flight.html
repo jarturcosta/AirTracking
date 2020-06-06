@@ -65,16 +65,12 @@
                             <li><a class="nav-link" href="/plane">Plane Data</a></li>
                         </ul>
                     </div>
-                    <div class="search-box">
-                        <input type="text" class="search-txt" placeholder="Search">
-                        <a class="search-btn">
-                            <img src="img/search_icon.png" alt="#" />
-                        </a>
-                    </div>
                 </div>
             </nav>
         </header>
         <!-- End header -->
+        
+        <div class="query"></div>
         
         <!-- section -->
         <div class="query">
@@ -84,7 +80,7 @@
                     <!-- LEFT SIDE DIV -->
                     <div class="col-md-4 query-left">
                         <h2>Flight Statistics</h2>
-                        <img src="img/flight.png" alt="flight">
+                        <img src="img/flight-icon-2.png" alt="flight">
                     </div>
                     
                     <!-- RIGHT SIDE DIV -->
@@ -109,11 +105,15 @@
                             <span th:if="${max_speed != ' '}"><span class="result-header">Max speed:</span> <span th:text="${max_speed}"></span></span><p></p>
                             <span th:if="${avg_speed != ' '}"><span class="result-header">Average speed:</span> <span th:text="${avg_speed}"></span></span><p></p>
                             <span th:if="${avg_vertical_rate != ' '}"><span class="result-header">Average vertical rate:</span> <span th:text="${avg_vertical_rate}"></span></span><p></p>
+                            <br><br>
+                            <span th:if="${icao24 != ' '}"><span>* values calculated from the last 5 flight states.</span>
                         </div>
                         
                     </div>           
             </div>
         </div>
+        
+        <div class="query"><br><br><br><br></div>
         
         <!-- end section -->
         
@@ -159,8 +159,8 @@
                 }
             });
             
-            console.log(country);
-            console.log(f);
+            //console.log(country);
+            //console.log(f);
             
             dropdown.options.length = 0;
             for (let i = 0; i < f.length; i++) {
