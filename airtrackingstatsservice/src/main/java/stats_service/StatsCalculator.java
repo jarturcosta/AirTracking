@@ -86,7 +86,7 @@ public class StatsCalculator {
                                 result.max_speed = speed;
                             }
                             speedSum += speed;
-                            if (flightState.getVertical_rate().equals("null")) {
+                            if (!flightState.getVertical_rate().equals("null")) {
                                 vrateSum += (Float.parseFloat(flightState.getVertical_rate()));
 
                             }
