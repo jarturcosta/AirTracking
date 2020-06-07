@@ -39,7 +39,7 @@ import org.springframework.data.mongodb.repository.Query;
  */
 @RestController
 @RequestMapping("/flightstates")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = {"http://localhost:8080", "http://192.168.160.103:9070"})
 public class FlightStateMessageController {
     
     @Autowired
