@@ -83,34 +83,44 @@
     // REFRESH PLANES
     var url = 'http://192.168.160.103:9069/flightstates/last';
     setInterval(function() {
-        $.getJSON(url, function(data) {
-            //console.log(data);
-            var planes = data.states;
-            //console.log(planes)
-            
-            // remove previous planes
-            svg.selectAll("image")
-                    .transition().duration(500)
-                    .remove();  
-            
-            // place planes
-            g.selectAll("circle")
-              .data(planes.filter(function(d){                
-                  return (d.longitude !== 'null' && d.latitude !== 'null');
-              }))
-              .enter()
-                .append("image")
-                .attr("xlink:href", "img/map-plane.png")
-                .attr("class", "plane")
-                .attr("transform", function(d) {
-                return "translate(" + projection([
-                    d.longitude,
-                    d.latitude
-                  ]) + ")";
-                })
-                .append("title")
-                    .text(d => "Flight: " + d.icao24 + "\nLongitude: " + d.longitude + "\nLatitude: " + d.latitude + "\nOrigin Country: " + d.origin_contry + "\nVelocity: " + d.velocity);
-        });                     
+        
+        $.ajax({
+            crossOrigin: true,
+            url: url,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            success: function(data) {
+                
+                //console.log(data);
+                var planes = data.states;
+                //console.log(planes)
+
+                // remove previous planes
+                svg.selectAll("image")
+                        .transition().duration(500)
+                        .remove();  
+
+                // place planes
+                g.selectAll("circle")
+                  .data(planes.filter(function(d){                
+                      return (d.longitude !== 'null' && d.latitude !== 'null');
+                  }))
+                  .enter()
+                    .append("image")
+                    .attr("xlink:href", "img/map-plane.png")
+                    .attr("class", "plane")
+                    .attr("transform", function(d) {
+                    return "translate(" + projection([
+                        d.longitude,
+                        d.latitude
+                      ]) + ")";
+                    })
+                    .append("title")
+                        .text(d => "Flight: " + d.icao24 + "\nLongitude: " + d.longitude + "\nLatitude: " + d.latitude + "\nOrigin Country: " + d.origin_contry + "\nVelocity: " + d.velocity);
+            }
+        });
     }, 10000);  
         
 }(d3,topojson));
