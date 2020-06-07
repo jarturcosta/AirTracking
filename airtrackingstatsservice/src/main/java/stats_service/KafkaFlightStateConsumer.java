@@ -95,11 +95,11 @@ public class KafkaFlightStateConsumer extends Thread {
         while (true) {
             final ConsumerRecords<Long, String> consumerRecords =
                     consumer.poll(1000);
-            if (consumerRecords.count()==0) {
+            /*if (consumerRecords.count()==0) {
                 noRecordsCount++;
                 if (noRecordsCount > giveUp) break;
                 else continue;
-            }
+            }*/
             consumerRecords.forEach(record -> {
                 producer.sendStats(record.value());
 
