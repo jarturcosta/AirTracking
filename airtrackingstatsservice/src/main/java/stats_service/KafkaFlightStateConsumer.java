@@ -24,7 +24,7 @@ import org.apache.kafka.common.serialization.IntegerDeserializer;
  * @author jarturcosta
  */
 public class KafkaFlightStateConsumer extends Thread {
-    private final static String TOPIC = "STATS_REQ_3";
+    private final static String TOPIC = "STATS_REQ_4";
     private final static String BOOTSTRAP_SERVERS = "192.168.160.103:9092";
     //private final static String BOOTSTRAP_SERVERS = "localhost:9092";
 
@@ -89,7 +89,7 @@ public class KafkaFlightStateConsumer extends Thread {
     static void runConsumer() throws InterruptedException {
         final Consumer<Long, String> consumer = createConsumer();
         final int giveUp = 100;   int noRecordsCount = 0;
-        KafkaFlightStateProducer producer = new KafkaFlightStateProducer("STATS_RESP_3", Boolean.TRUE);
+        KafkaFlightStateProducer producer = new KafkaFlightStateProducer("STATS_RESP_4", Boolean.TRUE);
         System.out.println("here");
 
         while (true) {

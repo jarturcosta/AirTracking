@@ -22,7 +22,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
  * @author jarturcosta
  */
 public class KafkaStatsConsumer extends Thread{
-    private final static String TOPIC = "STATS_RESP_3";
+    private final static String TOPIC = "STATS_RESP_4";
     private final static String BOOTSTRAP_SERVERS =
             "192.168.160.103:9092";
     private FlightStats lastStats;
