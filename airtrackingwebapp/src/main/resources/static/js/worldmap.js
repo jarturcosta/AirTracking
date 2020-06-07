@@ -87,6 +87,10 @@
         $.ajax({
             crossOrigin: true,
             url: url,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
             success: function(data) {
                 
                 //console.log(data);
