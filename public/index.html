@@ -274,6 +274,7 @@
 					<p>Foram então desenvolvidos testes de integração que verificavam que não só as operações CRUD tinham o comportamento esperado, como se algumas outras features funcionavam corretamente, como por exemplo, o cálculo correto de estatísticas de um determinado voo.</p>
 
 					<p>Os testes que validam os critérios de aceitação são os seguintes:</p>
+					<br />
 				</div>
 				<div class="row">
 					<h3>Teste de persistência</h3>
@@ -283,6 +284,7 @@
 						<li>Quando é realizado um pedido HTTP GET especificando o parâmetro temporal “123456”</li>
 						<li>Então, é obtido como resposta o FlightStateMessage que foi inserido anteriormente, comprovando assim as operações CRUD da API</li>
 					</ul>
+					<br />
 				</div>
 				<div class="row">
 					<h3>Teste de cálculo correto de estatísticas e message broker</h3>
@@ -292,6 +294,7 @@
 						<li>Quando realizado um pedido HTTP GET ao endpoint de estatícas da AirTracking API com a especificação de identificador de voo <b>“123TestMayDay”</b></li>
 						<li>Então, no corpo da resposta relativa às estatísticas desse voo, o valor da velocidade média terá que ser de <b>56.6</b>, comprovando assim que o cálculo estatístico da velocidade média de um voo específico está a ser calculado corretamente e as mensagens estão a ser trocadas corretamente entre a API e o serviço de estatísticas por via de Kafka.</li>
 					</ul>
+					<br />
 				</div>
 				<div class="row">
 					<p>Os testes são feitos à versão de staging do sistema, pelo que na pipeline de deployment estes são corridos após o build e execução da API.</p>
