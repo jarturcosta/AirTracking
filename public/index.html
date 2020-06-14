@@ -90,6 +90,21 @@
 					<p>Sistema composto por um conjunto de dashboards com base em dados fornecidos pela API OpenSky sobre aviões e respetivas viagens </p>
 				</div>
 			</div>
+			<div class="content">
+				<div class="row">
+					<h2>Sobre</h2>
+					<p>A plataforma Air Tracking tem como objetivo permitir uma fácil visualização e acesso a várias métricas de vôos aéreos.</p>
+					<p>Com base na identificação única de cada vôo pretendemos que o utilizador da plataforma consiga obter informações relevantes ao vôo como velocidade, altitude, localização, etc. Também pretendemos que o utilizador consiga localizar o vôo na sua posição geográfica para um enquadramento mais eficaz da sua localização territorial.</p>
+					<p>O utilizador da plataforma deve conseguir selecionar um vôo que esteja a decorrer neste momento sem que tenha que consultar informações em outros locais. Escolhendo um vôo o utilizador deve conseguir aceder às estatísticas do vôo e também do avião.</p>
+	
+					<p>Se um utilizador quiser saber os vôos que estão a sobrevoar uma região, o utilizador deve conseguir visualizar num mapa esses vôos de forma fácil.</p>
+	
+					<p>Ao escolher um vôo, o utilizador deve conseguir visualizar as informações do respetivo vôo.</p>
+	
+					<p>Ao escolher um avião o utilizador deve conseguir visualizar as informações sobre o avião em questão.</p>
+	
+				</div>
+			</div>
 		</div>
 	</section>
 	<section id="features" class="area">
@@ -198,7 +213,7 @@
 			</div>
 		</div>
 	</section>
-	<section id="arquitetura" class="main">
+	<section id="arquitetura" class="area">
 		<div class="container">
 			<div class="row">
 				<div class="text-box col-md-offset-1 col-md-10">
@@ -210,8 +225,120 @@
 			<div class="content">
 				<div class="img-box">
 					<div class="span4"></div>
-					<div class="span4 img-holder"><img class="center-block" src="images/arquitetura.png" alt=""></div>
+					<div class="span4 img-holder"><img class="center-block" src="images/arquitetura-2.png" alt=""></div>
 					<div class="span4"></div>
+				</div>
+				<div class="row">
+					<br />
+					<p>A arquitetura do projeto consiste numa rede de microsserviços com diversas funções. A aplicação principal, “Airtracking”, consiste numa API SpringBoot que consome dados da OpenSky API referentes aos diferentes voos. Esses dados são colocados numa base de dados MongoDB, atualizados de forma a impedir que o repositório fique demasiado populado com informação desatualizada.</p>
+					<div class="img-box">
+						<div class="span4"></div>
+						<div class="span4 img-holder"><img class="center-block" src="images/arquitetura-3.png" alt=""></div>
+						<div class="span4"></div>
+					</div>
+					<br />
+					<p>Após os dados serem consumidos da API OpenSky, as mensagens relativas aos estados do voo sofrem uma transformação para serem persistidas na nossa base de dados.<br />
+						Determinados campos considerados irrelevantes para o nosso caso de uso são eliminados e a mensagem é reestruturada para o formato chave - valor JSON que posteriormente é inserido na base de dados MongoDB.<br />
+						À estrutura completa da mensagem, chamamos de <b>FlightStateMessage</b> que é o conjunto de todas as informações de todos os voos a acontecer num determinado instante, sendo esse instante (time) a chave primária da sua entrada na BD.<br />
+						Cada FlightStateMessage tem portanto uma lista de <b>FlightStates</b>, que contém as referidas informações de cada voo que, por sua vez, é identificado pelo seu código <b>icao24</b>.
+					</p>
+					<p>Com essa informação, a aplicação “StatsCalculator” é capaz de calcular novos dados, como velocidade média de determinado vôo, informação esta que é passada através de Kafka para a API “Airtracking”, quando requisitada. Este data flow segue uma arquitetura de request/reply.</p>
+					<p>Nesta troca de informação dois tópicos de Kafka são responsáveis pelo transporte do pedido e da resposta da informação estatística, o <b>STATS_REQ</b> e o <b>STATS_RESP</b>.<br />
+						O primeiro contém as mensagens provenientes do controller na API responsável pelo pedido de estatísticas acerca de um certo voo, essas mensagens são apenas o código icao24 do voo que pretendemos obter estatísticas.<br />
+						O segundo tópico referido, contém as mensagens provenientes do serviço de estatísticas já contendo o corpo JSON da informação requisitada no pedido relativo aquele voo:
+					</p>
+					<div class="img-box">
+						<div class="span4"></div>
+						<div class="span4 img-holder"><img class="center-block" src="images/arquitetura-4.png" alt=""></div>
+						<div class="span4"></div>
+					</div>
+					<br />
+					<p>Esta mensagem é depois revolvida como resposta no método /getStats na AirTracking API após ser consumida do broker.<br />
+						As duas aplicações e a troca de informação entre si, sucintamente apresentadas, constituem o middleware da aplicação.
+					</p>
+					<p>A “Web App” consiste na camada superficial do sistema gerado, contendo o UI a apresentar aos utilizadores. As trocas de informação com o middleware ocorrem através de HTTP REST, realizando pedidos às APIs conforme o que for necessário para a página a apresentar.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="developers" class="main">
+		<div class="container">
+			<div class="row">
+				<div class="text-box col-md-offset-1 col-md-10">
+					<span class="span-padding"> &nbsp; </span>
+					<div class="row"> &nbsp;</div>
+					<h2 class="hidden-xs hidden-sm text-primary">Perspetiva dos developers</h2>
+				</div>
+			</div>
+			<div class="content">
+				<div class="row">
+					<ul>
+						<li>Criação da AirTracking API para haver controlo da informação vinda da OpenSky API, ou seja, ter uma API apenas com os dados pretendidos, estes dados são posteriormente guardados na base de dados, MongoDB.</li>
+						<li><a href="http://192.168.160.103:9069/flightstates/">http://192.168.160.103:9069/flightstates/</a></li>
+						<li>MongoDB - escalabilidade, flexibilidade/modularidade e velocidade de acesso aos dados.</li>
+						<li>Kafka para que que não houvesse sobrecarga no envio e receção das estatísticas.</li>
+					</ul>
+					
+					<h4>Webapp (<a href="http://192.168.160.103:9070/">http://192.168.160.103:9070/</a>)</h4>
+						
+					<h5>Mapa (<a href="http://192.168.160.103:9070/map">http://192.168.160.103:9070/map</a>)</h5>
+					<p>A página do mapa faz uma chamada ao endpoint (<a href="http://192.168.160.103:9069/flightstates/last">http://192.168.160.103:9069/flightstates/last</a>, que contém apenas os últimos dados de cada voo) a cada 10 segundos e dá update ao mapa consoante os dados mais recentes do mesmo. Sendo possível ver os aviões a moverem-se.<br />
+					Ao dar hover no avião é possível obter informação sobre o mesmo também através do mesmo endpoint.<br />
+					O mapa foi implementado em JavaScript com recurso a D3.js e funciona através de coordenadas reais.
+					</p>
+									
+					<h5>Flight Statistics (<a href="http://192.168.160.103:9070/flight">http://192.168.160.103:9070/flight</a>)</h5>
+					<p>A página das estatísticas dos voos consegue filtrar a lista dos voos atuais por país, de forma a que seja mais fácil encontrar o voo pretendido.<br />
+					Após a filtragem e escolha do voo pretendido é feita uma chamada ao endpoint (<a href="http://192.168.160.103:9069/getStats/icao24">http://192.168.160.103:9069/getStats/icao24</a>, que contém apenas as estatísticas já calculadas do icao24 em questão).<br />
+					As estatísticas são calculadas através dos 10 últimos flightstates.
+					</p>	
+					
+					<h5>Plane Data (<a href="http://192.168.160.103:9070/plane">http://192.168.160.103:9070/plane</a>)</h5>
+					Consegue filtrar da mesma maneira que o Flight Statistics, mas vai buscar os dados do avião ao endpoint (<a href="http://192.168.160.103:9069/flightstates/last">http://192.168.160.103:9069/flightstates/last</a>), podendo mostrar então os dados mais recentes do avião selecionado.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="testes" class="area">
+		<div class="container">
+			<div class="row">
+				<div class="text-box col-md-offset-1 col-md-10">
+					<span class="span-padding"> &nbsp; </span>
+					<div class="row"> &nbsp;</div>
+					<h2 class="hidden-xs hidden-sm text-primary">Testes</h2>
+				</div>
+			</div>
+			<div class="content">
+				<div class="row">
+					<p>Os testes de software desenvolvidos pretendem validar os cenários definidos posteriormente ao desenvolvimento do sistema.</p>
+					<p>Foram então desenvolvidos testes de integração que verificavam que não só as operações CRUD tinham o comportamento esperado, como se algumas outras features funcionavam corretamente, como por exemplo, o cálculo correto de estatísticas de um determinado voo.</p>
+
+					<p>Os testes que validam os critérios de aceitação são os seguintes:</p>
+					<br />
+				</div>
+				<div class="row">
+					<h3>Teste de persistência</h3>
+					<ul>
+						<li>Dado um FlightStateMessage que ocorra na <b>timestamp</b> “123456” com os campos <b>icao24</b>, <b>país de origem</b>, <b>posição temporal</b>, <b>último contacto</b>, <b>longitude</b>, <b>latitude</b>, <b>velocidade</b>, <b>taxa vertical</b> e o booleano que indica se o avião <b>está ou não em voo</b> de respetivos valores: <b>ab172vs</b>, <b>Portugal</b>, <b>15273617</b>, <b>15273617</b>, <b>47.123141</b>, <b>-3.127371</b>, <b>203.2</b>, <b>-0.23</b> e <b>False</b>.</li>
+						<li>Sendo o referido FlightStateMessage serializado em JSON e inserido no sistema por um pedido HTTP POST na AirTracking API</li>
+						<li>Quando é realizado um pedido HTTP GET especificando o parâmetro temporal “123456”</li>
+						<li>Então, é obtido como resposta o FlightStateMessage que foi inserido anteriormente, comprovando assim as operações CRUD da API</li>
+					</ul>
+					<br />
+				</div>
+				<div class="row">
+					<h3>Teste de cálculo correto de estatísticas e message broker</h3>
+					<ul>
+						<li>Dado 3 FlightStateMessages, todos tendo informações acerca do voo de Icao24 “123TestMayDay”, com os respetivos valores de velocidades: <b>52.7</b>, <b>60.2</b> e <b>56.9</b>.</b></li>
+						<li>Sendo as 3 mensagens serializadas em JSON e inseridas no sistema por um pedido HTTP POST à API</li>
+						<li>Quando realizado um pedido HTTP GET ao endpoint de estatícas da AirTracking API com a especificação de identificador de voo <b>“123TestMayDay”</b></li>
+						<li>Então, no corpo da resposta relativa às estatísticas desse voo, o valor da velocidade média terá que ser de <b>56.6</b>, comprovando assim que o cálculo estatístico da velocidade média de um voo específico está a ser calculado corretamente e as mensagens estão a ser trocadas corretamente entre a API e o serviço de estatísticas por via de Kafka.</li>
+					</ul>
+					<br />
+				</div>
+				<div class="row">
+					<p>Os testes são feitos à versão de staging do sistema, pelo que na pipeline de deployment estes são corridos após o build e execução da API.</p>
 				</div>
 			</div>
 		</div>
