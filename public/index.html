@@ -261,13 +261,52 @@
 			</div>
 		</div>
 	</section>
-	<section id="testes" class="main">
+	<section id="developers" class="main">
 		<div class="container">
 			<div class="row">
 				<div class="text-box col-md-offset-1 col-md-10">
 					<span class="span-padding"> &nbsp; </span>
 					<div class="row"> &nbsp;</div>
-					<h2 class="hidden-xs hidden-sm text-primary">Testes</h2>
+					<h2 class="visible-xs visible-sm text-primary">Perspetiva dos developers</h2>
+				</div>
+			</div>
+			<div class="content">
+				<div class="row">
+					<ul>
+						<li>Criação da AirTracking API para haver controlo da informação vinda da OpenSky API, ou seja, ter uma API apenas com os dados pretendidos, estes dados são posteriormente guardados na base de dados, MongoDB.</li>
+						<li><a href="http://192.168.160.103:9069/flightstates/">http://192.168.160.103:9069/flightstates/</a></li>
+						<li>MongoDB - escalabilidade, flexibilidade/modularidade e velocidade de acesso aos dados.</li>
+						<li>Kafka para que que não houvesse sobrecarga no envio e receção das estatísticas.</li>
+					</ul>
+					
+					<h4>Webapp (<a href="http://192.168.160.103:9070/">http://192.168.160.103:9070/</a>)</h4>
+						
+					<h5>Mapa (<a href="http://192.168.160.103:9070/map">http://192.168.160.103:9070/map</a>)</h5>
+					<p>A página do mapa faz uma chamada ao endpoint (<a href="http://192.168.160.103:9069/flightstates/last">http://192.168.160.103:9069/flightstates/last</a>, que contém apenas os últimos dados de cada voo) a cada 10 segundos e dá update ao mapa consoante os dados mais recentes do mesmo. Sendo possível ver os aviões a moverem-se.<br />
+					Ao dar hover no avião é possível obter informação sobre o mesmo também através do mesmo endpoint.<br />
+					O mapa foi implementado em JavaScript com recurso a D3.js e funciona através de coordenadas reais.
+					</p>
+									
+					<h5>Flight Statistics (<a href="http://192.168.160.103:9070/flight">http://192.168.160.103:9070/flight</a>)</h5>
+					<p>A página das estatísticas dos voos consegue filtrar a lista dos voos atuais por país, de forma a que seja mais fácil encontrar o voo pretendido.<br />
+					Após a filtragem e escolha do voo pretendido é feita uma chamada ao endpoint (<a href="http://192.168.160.103:9069/getStats/icao24">http://192.168.160.103:9069/getStats/icao24</a>, que contém apenas as estatísticas já calculadas do icao24 em questão).<br />
+					As estatísticas são calculadas através dos 10 últimos flightstates.
+					</p>	
+					
+					<h5>Plane Data (<a href="http://192.168.160.103:9070/plane">http://192.168.160.103:9070/plane</a>)</h5>
+					Consegue filtrar da mesma maneira que o Flight Statistics, mas vai buscar os dados do avião ao endpoint (<a href="http://192.168.160.103:9069/flightstates/last">http://192.168.160.103:9069/flightstates/last</a>), podendo mostrar então os dados mais recentes do avião selecionado.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="testes" class="area">
+		<div class="container">
+			<div class="row">
+				<div class="text-box col-md-offset-1 col-md-10">
+					<span class="span-padding"> &nbsp; </span>
+					<div class="row"> &nbsp;</div>
+					<h2 class="visible-xs visible-sm text-primary">Testes</h2>
 				</div>
 			</div>
 			<div class="content">
