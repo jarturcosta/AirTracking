@@ -127,28 +127,29 @@
             <version>1.4.200</version>
             <type>jar</type>
         </dependency>
-        
-        <dependency>
-	<groupId>org.springframework.security</groupId>
-	<artifactId>spring-security-test</artifactId>
-	<scope>test</scope>
-</dependency>
-<!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
-<dependency>
-    <groupId>org.assertj</groupId>
-    <artifactId>assertj-core</artifactId>
-    <version>3.13.2</version>
-    <scope>test</scope>
-    <type>jar</type>
-</dependency>
-
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <scope>test</scope>
             <version>2.2.0</version>
+            <type>jar</type>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.13.2</version>
             <scope>test</scope>
             <type>jar</type>
         </dependency>
+
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

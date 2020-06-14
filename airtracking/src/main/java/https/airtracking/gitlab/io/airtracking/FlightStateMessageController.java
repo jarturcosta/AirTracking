@@ -45,7 +45,7 @@ public class FlightStateMessageController {
     @Autowired
     private FlightStateMessageService flightStateService;
     
-    private KafkaIcao24Producer producer = new KafkaIcao24Producer("STATS_REQ_5", Boolean.TRUE);
+    private KafkaIcao24Producer producer = new KafkaIcao24Producer("STATS_REQ_6", Boolean.TRUE);
     private KafkaStatsConsumer consumer = new KafkaStatsConsumer();
     private int statRequestCount = 0, insertRequestCount = 0 ;
     private Gson gson = new Gson();
