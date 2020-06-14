@@ -1,122 +1,95 @@
 package https.airtracking.gitlab.io.airtracking;
-
 import com.google.gson.Gson;
 import https.airtracking.gitlab.io.airtracking.Models.FlightState;
 import https.airtracking.gitlab.io.airtracking.Models.FlightStateMessage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import https.airtracking.gitlab.io.airtracking.Models.FlightStats;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.runner.RunWith;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.After;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-//@SpringBootTest
+@SpringBootTest
+
 public class AirtrackingApplicationTests{
+    @Autowired
+    private FlightStateMessageController controller;
     
-        private static FlightStateMessage toSave;
-        private static FlightState toCheck;
-        private static HttpURLConnection con;
-        private static URL url;
+    private static FlightStateMessage toSave;
+    private static FlightState toCheck;
+    private static List<FlightStateMessage> statsTestCases = new ArrayList<>();
 
-        
-        public AirtrackingApplicationTests() {
+    @BeforeAll
+    public static void initialize() {
             
-        }
-    
-        @BeforeAll
-        public static void initialize() throws MalformedURLException, IOException {
-            
-            
+            // Insertion initialization
             toCheck = new FlightState("ab172vs", "Portugal", "15273617", "15273617" , "47.123141", "-3.127371", "203.2", "-0.23", "false");
             List<FlightState> states = new ArrayList<>();
             states.add(toCheck);
             toSave = new FlightStateMessage(123456, states);
-            url = new URL("http://192.168.160.103:9069/flightstates/byTime/" + Integer.toString(123456));
-            con = (HttpURLConnection) url.openConnection();
-
-        }
-
-	@Test
-	public void testInsertion() throws Exception {
             
-            /*
-            sendPost(toSave.toString());
-            Thread.sleep(5000);
-                    
             
-            Gson gson = new Gson();
-            FlightStateMessage fsm = gson.fromJson(getState(123456), FlightStateMessage.class);
-
-            assertTrue(fsm.getStates().get(0).equals(toCheck));
-            */
+            // Stats initialization
+            FlightState statState_1 = new FlightState("123TestMayDay", "Portugal", "123", "123" , "47.123141", "-3.127371", "52.7", "-0.23", "false");
+            FlightState statState_2 = new FlightState("123TestMayDay", "Portugal", "123", "123" , "47.123141", "-3.127371", "60.2", "-0.23", "false");
+            FlightState statState_3 = new FlightState("123TestMayDay", "Portugal", "123", "123" , "47.123141", "-3.127371", "56.9", "-0.23", "false");
             
-	}
+            // The average speed should be 56.6
+            
+            List<FlightState> stats_states_1 = new ArrayList<>(); stats_states_1.add(statState_1);
+            List<FlightState> stats_states_2 = new ArrayList<>(); stats_states_2.add(statState_2);
+            List<FlightState> stats_states_3 = new ArrayList<>(); stats_states_3.add(statState_3);
+            
+            statsTestCases.add(new FlightStateMessage(100, stats_states_1));
+            statsTestCases.add(new FlightStateMessage(101, stats_states_2));
+            statsTestCases.add(new FlightStateMessage(102, stats_states_3));
 
-        
-        @AfterAll
-        public static void remove() throws IOException {
-            System.out.println("Here");
-            //deleteState(123456);
-
-        }
-       
-        
-        private void sendPost(String body) throws Exception {
-
-            HttpPost post = new HttpPost("http://192.168.160.103:9069/flightstates");
-
-            StringEntity entity = new StringEntity(body);
-            post.setHeader("Accept", "application/json");
-            post.setHeader("Content-type", "application/json");
-            post.setEntity(entity);
-
-            try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                 CloseableHttpResponse response = httpClient.execute(post)) {
-
-                System.out.println(EntityUtils.toString(response.getEntity()));
-            }
-
-        }
-    
-    public static String getState(int time) throws MalformedURLException, IOException {
-        con.setRequestMethod("GET");
-        
-        int status = con.getResponseCode();
-        
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder content = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        in.close();
-        
-        return content.toString();
+            
+            
+            
     }
     
-    public static void deleteState(int time) throws MalformedURLException, IOException {
-        con = (HttpURLConnection) url.openConnection();
-        con.setDoOutput(true);
-        con.setRequestProperty(
-            "Content-Type", "application/x-www-form-urlencoded" );
-        con.setRequestMethod("DELETE");
-        con.connect();
+    @Test
+    public void testInsertion() throws Exception {
+        
+        controller.saveOrUpdateFlightStateMessage(toSave);
+        
+        FlightStateMessage fsm = controller.getFlightStateMessageByTime(123456);
+        
+        assertTrue(fsm.getStates().get(0).equals(toCheck));
     }
+    
+    @Test
+    public void testStats() throws Exception {
+        
+        for(FlightStateMessage message : statsTestCases) {
+            controller.saveOrUpdateFlightStateMessage(message);
+        }
+        
+        //Thread.sleep(5000);
+        
+        //FlightStats stats = controller.getFlightStatsByIcao24("123TestMayDay");
+                
+        //assertTrue(stats.avg_speed == 56.6);
+    }
+    
+    @After
+    public void remove() {
+        controller.deleteByTime(123456);
+        controller.deleteByTime(100);
+        controller.deleteByTime(101);
+        controller.deleteByTime(102);
+        
+    }
+        
 
 }
