@@ -90,6 +90,21 @@
 					<p>Sistema composto por um conjunto de dashboards com base em dados fornecidos pela API OpenSky sobre aviões e respetivas viagens </p>
 				</div>
 			</div>
+			<div class="content">
+				<div class="row">
+					<h2>Sobre</h2>
+					<p>A plataforma Air Tracking tem como objetivo permitir uma fácil visualização e acesso a várias métricas de vôos aéreos.</p>
+					<p>Com base na identificação única de cada vôo pretendemos que o utilizador da plataforma consiga obter informações relevantes ao vôo como velocidade, altitude, localização, etc. Também pretendemos que o utilizador consiga localizar o vôo na sua posição geográfica para um enquadramento mais eficaz da sua localização territorial.</p>
+					<p>O utilizador da plataforma deve conseguir selecionar um vôo que esteja a decorrer neste momento sem que tenha que consultar informações em outros locais. Escolhendo um vôo o utilizador deve conseguir aceder às estatísticas do vôo e também do avião.</p>
+	
+					<p>Se um utilizador quiser saber os vôos que estão a sobrevoar uma região, o utilizador deve conseguir visualizar num mapa esses vôos de forma fácil.</p>
+	
+					<p>Ao escolher um vôo, o utilizador deve conseguir visualizar as informações do respetivo vôo.</p>
+	
+					<p>Ao escolher um avião o utilizador deve conseguir visualizar as informações sobre o avião em questão.</p>
+	
+				</div>
+			</div>
 		</div>
 	</section>
 	<section id="features" class="area">
@@ -212,6 +227,32 @@
 					<div class="span4"></div>
 					<div class="span4 img-holder"><img class="center-block" src="images/arquitetura-2.png" alt=""></div>
 					<div class="span4"></div>
+				</div>
+				<div class="row">
+					<br />
+					<p>A arquitetura do projeto consiste numa rede de microsserviços com diversas funções. A aplicação principal, “Airtracking”, consiste numa API SpringBoot que consome dados da OpenSky API referentes aos diferentes voos. Esses dados são colocados numa base de dados MongoDB, atualizados de forma a impedir que o repositório fique demasiado populado com informação desatualizada.</p>
+					<div class="img-box">
+						<div class="span4"></div>
+						<div class="span4 img-holder"><img class="center-block" src="images/arquitetura-3.png" alt=""></div>
+						<div class="span4"></div>
+					</div>
+					<p>Após os dados serem consumidos da API OpenSky, as mensagens relativas aos estados do voo sofrem uma transformação para serem persistidas na nossa base de dados.
+						Determinados campos considerados irrelevantes para o nosso caso de uso são eliminados e a mensagem é reestruturada para o formato chave - valor JSON que posteriormente é inserido na base de dados MongoDB.
+						À estrutura completa da mensagem, chamamos de FlightStateMessage que é o conjunto de todas as informações de todos os voos a acontecer num determinado instante, sendo esse instante (time) a chave primária da sua entrada na BD.
+						Cada FlightStateMessage tem portanto uma lista de FlightStates, que contém as referidas informações de cada voo que, por sua vez, é identificado pelo seu código icao24.</p>
+					<p>Com essa informação, a aplicação “StatsCalculator” é capaz de calcular novos dados, como velocidade média de determinado vôo, informação esta que é passada através de Kafka para a API “Airtracking”, quando requisitada. Este data flow segue uma arquitetura de request/reply.</p>
+					<p>Nesta troca de informação dois tópicos de Kafka são responsáveis pelo transporte do pedido e da resposta da informação estatística, o STATS_REQ e o STATS_RESP.
+						O primeiro contém as mensagens provenientes do controller na API responsável pelo pedido de estatísticas acerca de um certo voo, essas mensagens são apenas o código icao24 do voo que pretendemos obter estatísticas.
+						O segundo tópico referido, contém as mensagens provenientes do serviço de estatísticas já contendo o corpo JSON da informação requisitada no pedido relativo aquele voo:
+						</p>
+					<div class="img-box">
+						<div class="span4"></div>
+						<div class="span4 img-holder"><img class="center-block" src="images/arquitetura-4.png" alt=""></div>
+						<div class="span4"></div>
+					</div>
+					<p>Esta mensagem é depois revolvida como resposta no método /getStats na AirTracking API após ser consumida do broker.
+						As duas aplicações e a troca de informação entre si, sucintamente apresentadas, constituem o middleware da aplicação.</p>
+					<p>A “Web App” consiste na camada superficial do sistema gerado, contendo o UI a apresentar aos utilizadores. As trocas de informação com o middleware ocorrem através de HTTP REST, realizando pedidos às APIs conforme o que for necessário para a página a apresentar.</p>
 				</div>
 			</div>
 		</div>
