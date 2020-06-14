@@ -236,6 +236,7 @@
 						<div class="span4 img-holder"><img class="center-block" src="images/arquitetura-3.png" alt=""></div>
 						<div class="span4"></div>
 					</div>
+					<br />
 					<p>Após os dados serem consumidos da API OpenSky, as mensagens relativas aos estados do voo sofrem uma transformação para serem persistidas na nossa base de dados.<br />
 						Determinados campos considerados irrelevantes para o nosso caso de uso são eliminados e a mensagem é reestruturada para o formato chave - valor JSON que posteriormente é inserido na base de dados MongoDB.<br />
 						À estrutura completa da mensagem, chamamos de <b>FlightStateMessage</b> que é o conjunto de todas as informações de todos os voos a acontecer num determinado instante, sendo esse instante (time) a chave primária da sua entrada na BD.<br />
@@ -251,6 +252,7 @@
 						<div class="span4 img-holder"><img class="center-block" src="images/arquitetura-4.png" alt=""></div>
 						<div class="span4"></div>
 					</div>
+					<br />
 					<p>Esta mensagem é depois revolvida como resposta no método /getStats na AirTracking API após ser consumida do broker.<br />
 						As duas aplicações e a troca de informação entre si, sucintamente apresentadas, constituem o middleware da aplicação.
 					</p>
