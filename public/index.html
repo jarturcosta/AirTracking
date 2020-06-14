@@ -291,18 +291,59 @@
 									
 					<h5>Flight Statistics (<a href="http://192.168.160.103:9070/flight">http://192.168.160.103:9070/flight</a>)</h5>
 					<p>A página das estatísticas dos voos consegue filtrar a lista dos voos atuais por país, de forma a que seja mais fácil encontrar o voo pretendido.<br />
-					Após a filtragem e escolha do voo pretendido é feita uma chamada ao endpoint (<a href="http://192.168.160.103:9069/getStats/icao24">http://192.168.160.103:9069/getStats/icao24</a>, que contém apenas as estatísticas já calculadas do icao24 em questão).<br />
-					As estatísticas são calculadas através dos 10 últimos flightstates.
+					Após a filtragem e escolha do voo pretendido é feita uma chamada ao endpoint (<a href="http://192.168.160.103:9069/getStats/{icao24}">http://192.168.160.103:9069/getStats/{icao24}</a>, que contém apenas as estatísticas já calculadas do icao24 em questão).<br />
+					As estatísticas são calculadas através dos 10 últimos flightstates (útlimos 20 minutos real-time).
 					</p>	
 					
 					<h5>Plane Data (<a href="http://192.168.160.103:9070/plane">http://192.168.160.103:9070/plane</a>)</h5>
-					Consegue filtrar da mesma maneira que o Flight Statistics, mas vai buscar os dados do avião ao endpoint (<a href="http://192.168.160.103:9069/flightstates/last">http://192.168.160.103:9069/flightstates/last</a>), podendo mostrar então os dados mais recentes do avião selecionado.
+					<p>Consegue filtrar da mesma maneira que o Flight Statistics, mas vai buscar os dados do avião ao endpoint (<a href="http://192.168.160.103:9069/flightstates/last">http://192.168.160.103:9069/flightstates/last</a>), podendo mostrar então os dados mais recentes do avião selecionado.
+					</p>
+
+					<p>Em implementações futuras, uma feature pertinente para o sistema seria o tracking de um avião específico por parte de um utilizador.<br />
+					Para tal, seria necessário a implementação de um sistema de sign-in e log-in no qual o utilizador registado poderia escolher um avião no qual quisesse ter informação de tracking em real time ou receber alertas (Email,SMS) que considerasse pertinentes, como por exemplo se um voo selecionado tivesse levantado voo ou tivesse pousado (campo booleano on_ground), se o avião estivesse em processo a descer de altitude o que indicaria que estivesse em processo de aterragem (valor negativo do vertical_rate e velocidade decrescente), etc.
 					</p>
 				</div>
 			</div>
 		</div>
 	</section>
-	<section id="testes" class="area">
+	<section id="operacoes" class="area">
+		<div class="container">
+			<div class="row">
+				<div class="text-box col-md-offset-1 col-md-10">
+					<span class="span-padding"> &nbsp; </span>
+					<div class="row"> &nbsp;</div>
+					<h2 class="hidden-xs hidden-sm text-primary">Perspetiva dos operações</h2>
+				</div>
+			</div>
+			<div class="content">
+				<div class="row">
+					<p>
+						As operações são geridas através de uma pipeline Jenkins que tem como função fazer build, correr testes, publicar as imagens no repositório e fazer o deploy no servidor de produção.
+					</p>
+					<p>
+						Estando o projeto separado em três aplicações, para cada uma delas é criada uma Docker Image através da respectiva Dockerfile, sendo posteriormente enviada para o repositório fornecido. O deploy no servidor de produção utiliza estas imagens a partir deste  repositório, sendo que em cada deploy apenas são manuseadas estas imagens.
+					</p>
+
+					<p>
+						O projeto utiliza o Mongo e Kafka para a transmissão de mensagens e o seu armazenamento, estas dependências correm em Docker Containers mas não são geridas através da pipeline Jenkins, sendo necessário a sua gestão manual por exemplo através de uma ligação remota ao servidor de produção.
+					</p>
+						
+					<p>
+						A criação de imagens Docker é feita após a compilação de cada uma das aplicações, que é realizada através do plugin Maven do Spring Boot, resultando num ficheiro WAR, este ficheiro é enviado para o repositório Artifactory e é utilizado para criar a imagem Docker.
+					</p>
+
+					<p>
+						A pipeline permite escolher qual a operação que queremos realizar, não sendo necessário correr todos os passos, podemos por exemplo executar o deploy, ou fazer build separadamente.
+					</p>
+
+					<p>
+						O processo de deploy termina e elimina o container e a imagem da aplicação selecionada no parâmetro da pipeline, de seguida uma nova imagem é transferida do repositório Docker e é iniciada, este processo de deploy não verifica se o Kafka ou Mongo estão a executar, tendo este requisito ser assegurado de forma manual, caso seja necessário fazer o deploy numa máquina nova.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="testes" class="main">
 		<div class="container">
 			<div class="row">
 				<div class="text-box col-md-offset-1 col-md-10">
